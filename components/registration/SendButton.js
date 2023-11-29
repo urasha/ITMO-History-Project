@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
+
 function SendButton() {
     return (
         <Pressable style={styles.button} color="#FFAB49">
@@ -6,6 +7,7 @@ function SendButton() {
         </Pressable>
     )
 }
+
 const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
@@ -25,4 +27,5 @@ const styles = StyleSheet.create({
       color: 'white',
     },
   });
+  
 export default SendButton;

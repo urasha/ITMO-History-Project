@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native"
 import HeaderText from "./HeaderText"
 import RegistrationInput from "./RegistrationInput"
 import SendButton from "./SendButton"
+
 function RegistrationPage(props) {
     return (
         <View style={styles.container}>
@@ -12,6 +13,7 @@ function RegistrationPage(props) {
         </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -21,4 +23,5 @@ const styles = StyleSheet.create({
       width: "100%",
     },
   });
+  
 export default RegistrationPage
