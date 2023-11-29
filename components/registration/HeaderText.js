@@ -1,4 +1,5 @@
 import { Text, StyleSheet } from "react-native";
+
 function HeaderText(props) {
     return (
         <Text style={styles.headerText}>
@@ -6,6 +7,7 @@ function HeaderText(props) {
         </Text>
     )
 }
+
 const styles = StyleSheet.create({
     headerText: {
       fontWeight: 'bold',
@@ -19,4 +21,5 @@ const styles = StyleSheet.create({
       marginBottom: 30
     }
 });
+
 export default HeaderText;

@@ -1,4 +1,5 @@
 import { TextInput, StyleSheet } from "react-native";
+
 function RegistrationInput(props) {
   return (
     <TextInput
@@ -8,6 +9,7 @@ function RegistrationInput(props) {
     />
   );
 }
+
 const styles = StyleSheet.create({
   inputStyle: {
     borderRadius: 100,
@@ -22,4 +24,5 @@ const styles = StyleSheet.create({
     maxWidth: 300,
   },
 });
+
 export default RegistrationInput;
