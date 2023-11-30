@@ -12,13 +12,8 @@ const styles = StyleSheet.create({
     headerText: {
       fontWeight: 'bold',
       fontSize: 35,
-      color: "#E8DED4",
-      marginBottom: 15,
-      borderBottomWidth:5,
-      borderColor: "#FFAB49",
-      padding: 10,
-      margin: 30,
-      marginBottom: 30
+      color: "#2C2C2C",
+      marginBottom: 20,
     }
 });
 
