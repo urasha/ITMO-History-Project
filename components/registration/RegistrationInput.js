@@ -4,7 +4,7 @@ function RegistrationInput(props) {
   return (
     <TextInput
       placeholder={props.placeholder}
-      placeholderTextColor={"#fff"}
+      placeholderTextColor={"#2C2C2C"}
       style={styles.inputStyle}
     />
   );
@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 4,
     borderColor: "#FFAB49",
-    color: "#fff",
+    backgroundColor: "#E8DED4",
+    color: "#2C2C2C",
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 15,

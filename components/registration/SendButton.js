@@ -12,19 +12,20 @@ const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
-      paddingVertical: 12,
-      paddingHorizontal: 32,
+      paddingVertical: 18,
+      paddingHorizontal: 38,
       borderRadius: 4,
       elevation: 3,
       borderRadius: 100,
       backgroundColor: '#FFAB49',
+      marginTop: '8%',
     },
+
     text: {
       fontSize: 16,
       lineHeight: 21,
-      fontWeight: 'bold',
       letterSpacing: 0.25,
-      color: 'white',
+      color: '#2C2C2C',
     },
   });
   
