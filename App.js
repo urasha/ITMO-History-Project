@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import RegistrationPage from './components/registration/RegistrationPage';
+import RegistrationPage from './components/registration/Page';
 
 export default function App() {
   return (

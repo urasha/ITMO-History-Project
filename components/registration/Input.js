@@ -1,6 +1,6 @@
 import { TextInput, StyleSheet } from "react-native";
 
-function RegistrationInput(props) {
+export default function RegistrationInput(props) {
   return (
     <TextInput
       placeholder={props.placeholder}
@@ -25,5 +25,3 @@ const styles = StyleSheet.create({
     maxWidth: 300,
   },
 });
-
-export default RegistrationInput;

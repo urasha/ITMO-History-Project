@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native"
 import HeaderText from "./HeaderText"
 import SendButton from "./SendButton"
-import RegistrationForm from "./RegistrationForm"
+import RegistrationForm from "./Form"
 
-function RegistrationPage(props) {
+export default function RegistrationPage(props) {
     return (
         <View style={styles.container}>
             <HeaderText>{props.title}</HeaderText>
@@ -31,5 +31,3 @@ const styles = StyleSheet.create({
       marginBottom: 25,
     }
 });
-  
-export default RegistrationPage
