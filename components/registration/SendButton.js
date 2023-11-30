@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 function SendButton() {
     return (
         <Pressable style={styles.button} color="#FFAB49">
-            <Text style={styles.text}>Отправить</Text>
+            <Text style={styles.text}>Войти</Text>
         </Pressable>
     )
 }
