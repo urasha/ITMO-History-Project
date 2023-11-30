@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 
-function SendButton() {
+export default function SendButton() {
     return (
         <Pressable style={styles.button} color="#FFAB49">
             <Text style={styles.text}>Войти</Text>
@@ -28,5 +28,3 @@ const styles = StyleSheet.create({
       color: '#2C2C2C',
     },
   });
-  
-export default SendButton;

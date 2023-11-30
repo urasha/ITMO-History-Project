@@ -1,6 +1,6 @@
 import { Text, StyleSheet } from "react-native";
 
-function HeaderText(props) {
+export default function HeaderText(props) {
     return (
         <Text style={styles.headerText}>
             {props.children}
@@ -16,5 +16,3 @@ const styles = StyleSheet.create({
       marginBottom: 15,
     }
 });
-
-export default HeaderText;
