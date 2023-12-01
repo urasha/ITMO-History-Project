@@ -1,14 +1,15 @@
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { RegistrationPageButton } from '../../common/RegistrationPageButton';
 import HeaderText from '../../registration/HeaderText';
-import AbilitiesList from './List';
+import AbilitiesList from './AbilitiesList';
 
 export default function AbilitiesPage(props) {
-    // TODO: ADD BUTTON TO CONTINUE
     return (
         <View style={styles.container}>
             <HeaderText>{props.title}</HeaderText>
-            <View style={styles.hr}/>
-            <AbilitiesList/>
+            <View style={styles.hr} />
+            <AbilitiesList />
+            <RegistrationPageButton title='Начать регистрацию' />
         </View>
     );
 }
@@ -28,6 +29,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 5,
         borderColor: '#FFAB49',
         marginBottom: 25,
-      },
+    },
 });
 
