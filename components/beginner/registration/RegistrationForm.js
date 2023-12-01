@@ -1,7 +1,7 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
 import RegistrationInput from "./RegistrationInput";
 
-const backgroundImage = require('../../assets/registration/registrationBackground.png');
+const backgroundImage = require('../../../assets/registration/registrationBackground.png');
 
 export default function RegistrationForm() {
   return (

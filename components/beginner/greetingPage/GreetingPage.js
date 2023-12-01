@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
-import RegistrationPageButton from "../common/RegistrationPageButton";
+import RegistrationPageButton from "../../common/RegistrationPageButton";
+
+const logo = require("../../../assets/logo.png")
 
 export default function GreetingPage() {
     return (
@@ -10,7 +12,7 @@ export default function GreetingPage() {
 				<View style={[styles.hr, {width: "16%"}]} />
 				<View style={[styles.hr, {width: "10%"}]} />
 			</View>
-            <Image style={styles.image} source={require("../../assets/logo.png")} />
+            <Image style={styles.image} source={logo} />
 			<Text style={styles.text}>Мы поможем тебе погрузиться в историю самым интересным и полезным способом!</Text>
 			<View style={styles.buttonContainer}>
             	<RegistrationPageButton title="Подробнее" />

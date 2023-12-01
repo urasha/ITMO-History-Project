@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import HeaderText from "./HeaderText";
-import Button from "../common/RegistrationPageButton";
+import Button from "../../common/RegistrationPageButton";
 import RegistrationForm from "./RegistrationForm";
 
 export default function RegistrationPage(props) {
