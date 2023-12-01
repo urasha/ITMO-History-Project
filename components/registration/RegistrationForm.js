@@ -1,5 +1,5 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
-import RegistrationInput from "./Input";
+import RegistrationInput from "./RegistrationInput";
 
 const backgroundImage = require('../../assets/registration/registrationBackground.png');
 

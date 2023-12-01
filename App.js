@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View } from 'react-native'
-import RegistrationPage from './components/registration/Page'
-import AbilitiesPage from './components/beginner/abilities/Page';
+import RegistrationPage from './components/registration/RegistrationPage'
+import AbilitiesPage from './components/beginner/abilities/AbilitiesPage';
+import GreetingPage  from './components/greetingPage/GreetingPage';
 
 export default function App() {
   // return (
@@ -11,12 +12,19 @@ export default function App() {
   //   </View>
   // );
 
+  // return (
+  //   <View style={styles.container}>
+  //     <AbilitiesPage title='Особенности'/>
+  //     <StatusBar style="auto" />
+  //   </View>
+  // );
+
   return (
     <View style={styles.container}>
-      <AbilitiesPage title='Особенности'/>
+      <GreetingPage />
       <StatusBar style="auto" />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

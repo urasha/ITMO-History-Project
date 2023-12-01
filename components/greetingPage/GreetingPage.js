@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
-import RegistrationPageButton from "../common/Button";
+import RegistrationPageButton from "../common/RegistrationPageButton";
 
 export default function GreetingPage() {
     return (
