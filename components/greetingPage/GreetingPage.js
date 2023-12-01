@@ -5,6 +5,11 @@ import RegistrationPageButton from "../common/RegistrationPageButton";
 export default function GreetingPage() {
     return (
         <View style={styles.container}>
+			<View style={styles.hrContainer}>
+				<View style={[styles.hr, {width: "22%"}]} />
+				<View style={[styles.hr, {width: "16%"}]} />
+				<View style={[styles.hr, {width: "10%"}]} />
+			</View>
             <Image style={styles.image} source={require("../../assets/logo.png")} />
 			<Text style={styles.text}>Мы поможем тебе погрузиться в историю самым интересным и полезным способом!</Text>
 			<View style={styles.buttonContainer}>
@@ -48,5 +53,24 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
         justifyContent: "center",
+	},
+
+	hr: {
+        height: "0.1%",
+        width: "35%",
+		borderRadius: 100,
+        borderTopWidth: 7,
+        borderColor: "#FFAB49",
+        marginBottom: 12.5 ,
+    },
+
+
+	hrContainer: {
+		position: "absolute",
+		top: "7%",
+		flex: 1,
+		alignItems: "flex-end",
+		width: "100%",
+		paddingRight: 20
 	}
 });
