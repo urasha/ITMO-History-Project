@@ -9,6 +9,8 @@ import AbilitiesPage from '../beginner/abilities/AbilitiesPage'
 import GreetingPage from '../beginner/greetingPage/GreetingPage'
 
 const window = Dimensions.get('window');
+
+// We need only first two
 const pages = [<GreetingPage />, <AbilitiesPage title='Возможность' />, <LoginPage title='Невская застава' />]
 
 export default function IntroPages() {

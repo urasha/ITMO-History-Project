@@ -3,12 +3,13 @@ import LoginInput from "./LoginInput";
 
 const backgroundImage = require('../../../assets/registration/registrationBackground.png');
 
-export default function LoginForm() {
+export default function RegistrationForm() {
   return (
     <ImageBackground source={backgroundImage} style={styles.coverImage}>
       <View style={styles.input}>
         <LoginInput placeholder="Логин" />
-        <LoginInput placeholder="Пароль" isSecured={true} />
+        <LoginInput placeholder="Пароль" />
+        <LoginInput placeholder="Подтверждение пароля" />
       </View>
     </ImageBackground>
   );
