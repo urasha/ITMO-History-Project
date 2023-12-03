@@ -2,34 +2,34 @@ import React from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
 import RegistrationPageButton from "../../common/RegistrationPageButton";
 
-const logo = require("../../../assets/logo.png")
+const logo = require("../../../assets/beginner/logo.png")
 
 export default function GreetingPage() {
-    return (
-        <View style={styles.container}>
+	return (
+		<View style={styles.container}>
 			<View style={styles.hrContainer}>
-				<View style={[styles.hr, {width: "22%"}]} />
-				<View style={[styles.hr, {width: "16%"}]} />
-				<View style={[styles.hr, {width: "10%"}]} />
+				<View style={[styles.hr, { width: "22%" }]} />
+				<View style={[styles.hr, { width: "16%" }]} />
+				<View style={[styles.hr, { width: "10%" }]} />
 			</View>
-            <Image style={styles.image} source={logo} />
+			<Image style={styles.image} source={logo} />
 			<Text style={styles.text}>Мы поможем тебе погрузиться в историю самым интересным и полезным способом!</Text>
 			<View style={styles.buttonContainer}>
-            	<RegistrationPageButton title="Подробнее" />
+				<RegistrationPageButton title="Подробнее" />
 			</View>
-        </View>
-    );
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#E8DED4",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
+	container: {
+		flex: 1,
+		backgroundColor: "#E8DED4",
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100%",
 		height: "100%"
-    },
+	},
 
 	image: {
 		resizeMode: "contain",
@@ -54,17 +54,17 @@ const styles = StyleSheet.create({
 		bottom: "15%",
 		flex: 1,
 		alignItems: "center",
-        justifyContent: "center",
+		justifyContent: "center",
 	},
 
 	hr: {
-        height: "0.1%",
-        width: "35%",
+		height: "0.1%",
+		width: "35%",
 		borderRadius: 100,
-        borderTopWidth: 7,
-        borderColor: "#FFAB49",
-        marginBottom: 12.5 ,
-    },
+		borderTopWidth: 7,
+		borderColor: "#FFAB49",
+		marginBottom: 12.5,
+	},
 
 
 	hrContainer: {

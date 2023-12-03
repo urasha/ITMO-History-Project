@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
 import HeaderText from "./HeaderText";
 import Button from "../../common/RegistrationPageButton";
-import RegistrationForm from "./RegistrationForm";
+import RegistrationForm from "./LoginForm";
 
-export default function RegistrationPage(props) {
+export default function LoginPage(props) {
     return (
         <View style={styles.container}>
             <HeaderText>{props.title}</HeaderText>
