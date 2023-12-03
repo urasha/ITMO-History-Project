@@ -6,6 +6,7 @@ export default function LoginInput(props) {
             placeholder={props.placeholder}
             placeholderTextColor={"#2C2C2C"}
             style={styles.inputStyle}
+            secureTextEntry={props.isSecured}
         />
     );
 }

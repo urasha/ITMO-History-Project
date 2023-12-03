@@ -1,15 +1,15 @@
 import { View, StyleSheet } from "react-native";
 import HeaderText from "./HeaderText";
-import Button from "../../common/RegistrationPageButton";
-import LoginForm from "./LoginForm";
+import RegistrationPageButton from "../../common/RegistrationPageButton";
+import RegistrationForm from "./RegistrationForm";
 
-export default function LoginPage(props) {
+export default function RegistrationPage(props) {
     return (
         <View style={styles.container}>
             <HeaderText>{props.title}</HeaderText>
             <View style={styles.hr} />
-            <LoginForm />
-            <Button title="Войти" />
+            <RegistrationForm />
+            <RegistrationPageButton title="Создать аккаунт" />
         </View>
     );
 }
@@ -31,3 +31,4 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
 });
+

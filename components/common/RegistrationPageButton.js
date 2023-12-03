@@ -1,9 +1,29 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, Animated } from "react-native";
 
 export default function RegistrationPageButton(props) {
+    const animated = new Animated.Value(1);
+
+    const fadeIn = () => {
+        Animated.timing(animated, {
+            toValue: 0.4,
+            duration: 100,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const fadeOut = () => {
+        Animated.timing(animated, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+        }).start();
+    };
+
     return (
-        <Pressable style={styles.button} color="#FFAB49">
-            <Text style={styles.text}>{props.title}</Text>
+        <Pressable style={styles.button} color="#FFAB49" onPressIn={fadeIn} onPressOut={fadeOut}>
+            <Animated.View style={{opacity: animated}}>
+                <Text style={styles.text}>{props.title}</Text>
+            </Animated.View>
         </Pressable>
     );
 }
