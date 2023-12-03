@@ -8,8 +8,8 @@ export default function RegistrationForm() {
     <ImageBackground source={backgroundImage} style={styles.coverImage}>
       <View style={styles.input}>
         <LoginInput placeholder="Логин" />
-        <LoginInput placeholder="Пароль" />
-        <LoginInput placeholder="Подтверждение пароля" />
+        <LoginInput placeholder="Пароль" isSecured={true} />
+        <LoginInput placeholder="Подтверждение пароля" isSecured={true} />
       </View>
     </ImageBackground>
   );

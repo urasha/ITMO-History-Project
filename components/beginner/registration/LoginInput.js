@@ -1,12 +1,17 @@
 import { TextInput, StyleSheet } from "react-native"
 
-export default function LoginInput(props) {
+export default function LoginInput({ placeholder, isSecured, value, setValue, validate }) {
     return (
         <TextInput
-            placeholder={props.placeholder}
+            placeholder={placeholder}
             placeholderTextColor={"#2C2C2C"}
             style={styles.inputStyle}
-            secureTextEntry={props.isSecured}
+            secureTextEntry={isSecured}
+			value={value}
+			onChangeText={(text) => {
+				setValue(text);
+				validate(text);
+			}}
         />
     );
 }

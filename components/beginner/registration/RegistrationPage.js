@@ -3,10 +3,10 @@ import HeaderText from "./HeaderText";
 import RegistrationPageButton from "../../common/RegistrationPageButton";
 import RegistrationForm from "./RegistrationForm";
 
-export default function RegistrationPage(props) {
+export default function RegistrationPage({ title }) {
     return (
         <View style={styles.container}>
-            <HeaderText>{props.title}</HeaderText>
+            <HeaderText>{title}</HeaderText>
             <View style={styles.hr} />
             <RegistrationForm />
             <RegistrationPageButton title="Создать аккаунт" />
@@ -31,4 +31,3 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
 });
-
