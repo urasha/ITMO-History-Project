@@ -13,18 +13,18 @@ const roundText = 'Найди свой любимый исторический �
 export default function AbilitiesList() {
   return (
     <View style={styles.container}>
-        <ListComponent text={heartText} image={heartImage}/>
-        <ListComponent text={rootText} image={rootImage}/>
-        <ListComponent text={roundText} image={roundImage}/>
+      <ListComponent text={heartText} image={heartImage} />
+      <ListComponent text={rootText} image={rootImage} />
+      <ListComponent text={roundText} image={roundImage} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 0.55,
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '75%',
-    },
+  container: {
+    flex: 0.55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '75%',
+  },
 });

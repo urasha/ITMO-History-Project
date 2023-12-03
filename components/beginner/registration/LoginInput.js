@@ -1,6 +1,6 @@
 import { TextInput, StyleSheet } from "react-native"
 
-export default function RegistrationInput(props) {
+export default function LoginInput(props) {
     return (
         <TextInput
             placeholder={props.placeholder}

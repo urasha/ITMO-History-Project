@@ -4,12 +4,12 @@ import { StyleSheet, View, Dimensions } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
 import Carousel from 'react-native-reanimated-carousel'
-import RegistrationPage from '../beginner/registration/RegistrationPage'
+import LoginPage from './registration/LoginPage'
 import AbilitiesPage from '../beginner/abilities/AbilitiesPage'
 import GreetingPage from '../beginner/greetingPage/GreetingPage'
 
 const window = Dimensions.get('window');
-const pages = [<GreetingPage />, <AbilitiesPage title='Возможность' />, <RegistrationPage title='Невская застава' />]
+const pages = [<GreetingPage />, <AbilitiesPage title='Возможность' />, <LoginPage title='Невская застава' />]
 
 export default function IntroPages() {
   return (

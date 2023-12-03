@@ -19,15 +19,15 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         backgroundColor: "#FFAB49",
         marginTop: "8%",
-		width: "55%",
-		maxWidth: 300
+        width: "55%",
+        maxWidth: 300
     },
 
     text: {
         fontSize: 18,
         lineHeight: 21,
         textAlign: "center",
-		fontWeight: "500",
+        fontWeight: "500",
         letterSpacing: 0.25,
         color: "#2C2C2C",
     },
