@@ -19,14 +19,14 @@ export default function LoginForm() {
                     setEmail={setEmail}
                     setIsCorrectEmail={setIsCorrectEmail}
                 />
-                {isCorrectEmail ? null : <Text>email неправильный!!!</Text>}
+                {isCorrectEmail ? null : <Text style={styles.text}>Email некорретный</Text>}
                 <PasswordInput
                     value={password}
                     setPassword={setPassword}
                     setIsCorrectPassword={setIsCorrectPassword}
                 />
                 {isCorrectPassword ? null : (
-                    <Text>
+                    <Text style={styles.text}>
                         Пароль должен состоять из латинских букв, быть не менее 12 символов, содержать как
                         минимум одну цифру, одну заглавную букву, одну строчную букву!
                     </Text>
@@ -51,4 +51,12 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
     },
+
+    text: {
+        fontWeight: "700",
+        marginTop: -17,
+        marginBottom: 5,
+        textAlign: 'center',
+        color: '#bf483f',
+    }
 });
