@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 
     text: {
         color: '#2C2C2C',
-        fontFamily: 'Symbol',
         fontSize: 20,
         width: '70%',
         marginLeft: '5%',
