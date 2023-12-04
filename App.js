@@ -2,12 +2,12 @@ import IntroPages from './components/beginner/IntroPages'
 import RegistrationPage from './components/beginner/registration/RegistrationPage'
 
 export default function App() {
-  // return (
-  //   <IntroPages />
-  // );
+  return (
+    <IntroPages />
+  );
 
-  // return (
-  //   <RegistrationPage title='Регистрация' />
-  // );
+//   return (
+//     <RegistrationPage title='Регистрация' />
+//   );
 }
 

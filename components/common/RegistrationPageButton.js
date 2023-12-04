@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, Animated } from "react-native";
 
-export default function RegistrationPageButton(props) {
+export default function RegistrationPageButton({ nextSlide, title }) {
     const animated = new Animated.Value(1);
 
     const fadeIn = () => {
@@ -20,9 +20,15 @@ export default function RegistrationPageButton(props) {
     };
 
     return (
-        <Pressable style={styles.button} color="#FFAB49" onPressIn={fadeIn} onPressOut={fadeOut}>
-            <Animated.View style={{opacity: animated}}>
-                <Text style={styles.text}>{props.title}</Text>
+        <Pressable
+            style={styles.button}
+            color="#FFAB49"
+            onPress={() => nextSlide ? nextSlide() : null}
+            onPressIn={fadeIn}
+            onPressOut={fadeOut}
+        >
+            <Animated.View style={{ opacity: animated }}>
+                <Text style={styles.text}>{title}</Text>
             </Animated.View>
         </Pressable>
     );
@@ -40,7 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFAB49",
         marginTop: "8%",
         width: "55%",
-        maxWidth: 300
+        maxWidth: 300,
     },
 
     text: {

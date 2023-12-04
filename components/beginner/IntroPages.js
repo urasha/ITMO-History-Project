@@ -1,41 +1,60 @@
-import 'react-native-gesture-handler'
+import "react-native-gesture-handler";
 
-import { StyleSheet, View, Dimensions } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, View, Dimensions } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
-import Carousel from 'react-native-reanimated-carousel'
-import LoginPage from './registration/LoginPage'
-import AbilitiesPage from '../beginner/abilities/AbilitiesPage'
-import GreetingPage from '../beginner/greetingPage/GreetingPage'
+import Carousel from "react-native-reanimated-carousel";
+import LoginPage from "./registration/LoginPage";
+import AbilitiesPage from "../beginner/abilities/AbilitiesPage";
+import GreetingPage from "../beginner/greetingPage/GreetingPage";
+import { useEffect, useRef, useState } from "react";
 
-const window = Dimensions.get('window');
-
-// We need only first two
-const pages = [<GreetingPage />, <AbilitiesPage title='Возможность' />, <LoginPage title='Невская застава' />]
+const window = Dimensions.get("window");
 
 export default function IntroPages() {
-  return (
-    <View style={styles.container}>
-      <Carousel
-        loop={false}
-        width={window.width}
-        height={window.height}
-        autoPlay={false}
-        data={[...new Array(3).keys()]}
-        scrollAnimationDuration={500}
-        renderItem={({ index }) => (
-          pages[index]
-        )}
-      />
-      <StatusBar style='auto' />
-    </View>
-  );
+    const [slide, setSlide] = useState(0);
+
+    useEffect(() => {
+        if (slide != 0) {
+            carouselRef.current.next();
+        }
+    }, [slide]);
+
+    const carouselRef = useRef(null);
+
+    function nextSlide() {
+        setSlide(slide + 1);
+    }
+
+    // We need only first two
+    const pages = [
+        <GreetingPage nextSlide={nextSlide} />,
+        <AbilitiesPage nextSlide={nextSlide} title="Возможность" />,
+        <LoginPage title="Невская застава" />,
+    ];
+
+    return (
+        <View style={styles.container}>
+            <Carousel
+                ref={carouselRef}
+                loop={false}
+                width={window.width}
+                height={window.height}
+                autoPlay={false}
+                data={[...new Array(3).keys()]}
+                scrollAnimationDuration={500}
+                renderItem={({ index }) => pages[index]}
+                onSnapToItem={(index) => setSlide(index)}
+            />
+            <StatusBar style="auto" />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
 });

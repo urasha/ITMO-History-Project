@@ -3,10 +3,10 @@ import HeaderText from "./HeaderText";
 import Button from "../../common/RegistrationPageButton";
 import LoginForm from "./LoginForm";
 
-export default function LoginPage(props) {
+export default function LoginPage({ title }) {
     return (
         <View style={styles.container}>
-            <HeaderText>{props.title}</HeaderText>
+            <HeaderText>{title}</HeaderText>
             <View style={styles.hr} />
             <LoginForm />
             <Button title="Войти" />
