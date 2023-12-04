@@ -12,18 +12,11 @@ import { useEffect, useRef, useState } from "react";
 const window = Dimensions.get("window");
 
 export default function IntroPages() {
-    const [slide, setSlide] = useState(0);
-
-    useEffect(() => {
-        if (slide != 0) {
-            carouselRef.current.next();
-        }
-    }, [slide]);
 
     const carouselRef = useRef(null);
 
     function nextSlide() {
-        setSlide(slide + 1);
+        carouselRef.current.next();
     }
 
     // We need only first two
@@ -41,10 +34,9 @@ export default function IntroPages() {
                 width={window.width}
                 height={window.height}
                 autoPlay={false}
-                data={[...new Array(3).keys()]}
+                data={[...new Array(pages.length).keys()]}
                 scrollAnimationDuration={500}
                 renderItem={({ index }) => pages[index]}
-                onSnapToItem={(index) => setSlide(index)}
             />
             <StatusBar style="auto" />
         </View>
