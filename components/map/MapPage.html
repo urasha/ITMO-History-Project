@@ -1,0 +1,61 @@
+<head>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3f01461a-9b71-4ce2-af95-b3c5012a90e3" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+
+        function init() {
+            var myMap = new ymaps.Map('map', {
+                center: [60.01, 30.38],
+                zoom: 12,
+                controls: []
+            });
+
+
+
+            personGeo = new ymaps.Placemark([0, 0], {}, {preset: 'islands#geolocationIcon'});
+            myMap.geoObjects.add(personGeo);
+            
+            ymaps.geolocation.get({
+                provider: 'yandex',
+                mapStateAutoApply: true
+            }).then(function (result) {
+                personGeo.geometry.setCoordinates(result.geoObjects.get(0).geometry.getCoordinates());
+            });
+
+            routePoints = [];
+            multiRoute = new ymaps.multiRouter.MultiRoute({
+                referencePoints: routePoints,
+                params: {
+                    routingMode: 'pedestrian'
+                }
+            }, {
+                boundsAutoApply: false
+            });
+            myMap.geoObjects.add(multiRoute);
+
+            window.addEventListener("message", message => {
+                //console.log("GOT ");
+                //console.log(message.data);
+                
+                if (message.data[0] == 'route') {
+                    switch (message.data[1]) {
+                        case '1':
+                            routePoints = ["Санкт-Петербург, Кронверкский проспект 49", "Санкт-Петербург, Ломоносова 9"];
+                            break;
+                        case '2':
+                            routePoints = ["Санкт-Петербург, Биржевая линия 14", "Санкт-Петербург, Гривцова 14-16"];
+                            break;
+                    }
+
+                    multiRoute.model.setReferencePoints(routePoints);
+                }
+                else if (message.data[0] === 'location') {
+                    personGeo.geometry.setCoordinates([message.data[1], message.data[2]]);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="map" style="width: 100vw; height: 100vh"></div>
+</body>
