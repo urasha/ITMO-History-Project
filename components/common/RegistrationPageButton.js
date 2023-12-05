@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, Animated } from "react-native";
 
-export default function RegistrationPageButton({ nextSlide, title }) {
+export default function RegistrationPageButton({ nextSlide, title, validate }) {
+    
     const animated = new Animated.Value(1);
 
     const fadeIn = () => {
@@ -23,7 +24,10 @@ export default function RegistrationPageButton({ nextSlide, title }) {
         <Pressable
             style={styles.button}
             color="#FFAB49"
-            onPress={() => nextSlide ? nextSlide() : null}
+            onPress={() => {
+                if (nextSlide) nextSlide()
+                if (validate) validate()
+            }}
             onPressIn={fadeIn}
             onPressOut={fadeOut}
         >

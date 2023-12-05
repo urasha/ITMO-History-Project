@@ -5,10 +5,9 @@ import { useState } from "react";
 
 const backgroundImage = require("../../../assets/registration/registrationBackground.png");
 
-export default function LoginForm() {
-    const [email, setEmail] = useState("");
+export default function LoginForm({ email, password, setEmail, setPassword }) {
+
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
-    const [password, setPassword] = useState("");
     const [isCorrectPassword, setIsCorrectPassword] = useState(true);
 
     return (
