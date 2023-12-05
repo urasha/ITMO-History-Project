@@ -2,14 +2,25 @@ import { View, StyleSheet } from "react-native";
 import HeaderText from "./HeaderText";
 import Button from "../../common/RegistrationPageButton";
 import LoginForm from "./LoginForm";
+import { useState } from "react";
 
 export default function LoginPage({ title }) {
+
+    function validate() {
+        console.log(123)
+        const emailll = email;
+        const passswr = password;
+    }
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     return (
         <View style={styles.container}>
             <HeaderText>{title}</HeaderText>
             <View style={styles.hr} />
-            <LoginForm />
-            <Button title="Войти" />
+            <LoginForm email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+            <Button title="Войти" validate={validate} />
         </View>
     );
 }
