@@ -2,7 +2,7 @@ import { View, StyleSheet, ImageBackground, Text } from "react-native";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import { useState } from "react";
-
+import connection from "../../../src/routes";
 const backgroundImage = require("../../../assets/registration/registrationBackground.png");
 
 export default function LoginForm() {
@@ -10,7 +10,13 @@ export default function LoginForm() {
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
     const [password, setPassword] = useState("");
     const [isCorrectPassword, setIsCorrectPassword] = useState(true);
-
+     connection.getConnection(function (err, connection) {
+        connection.query('SELECT * FROM Users WHERE name = ${email} AND password = ${password}', function (error, results, fields) {
+            if (error) throw error;
+            console.log(results);
+            res.send(results);
+        });
+    });
     return (
         <ImageBackground source={backgroundImage} style={styles.coverImage}>
             <View style={styles.input}>
