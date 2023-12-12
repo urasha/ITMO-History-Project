@@ -2,21 +2,27 @@ import React from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
 import RegistrationPageButton from "../../common/RegistrationPageButton";
 
-const logo = require("../../../assets/logo.png")
+const logo = require("../../../assets/beginner/logo.png");
 
-export default function GreetingPage() {
+export default function GreetingPage({ nextSlide }) {
     return (
         <View style={styles.container}>
-			<View style={styles.hrContainer}>
-				<View style={[styles.hr, {width: "22%"}]} />
-				<View style={[styles.hr, {width: "16%"}]} />
-				<View style={[styles.hr, {width: "10%"}]} />
-			</View>
+            <View style={styles.hrContainer}>
+                <View style={[styles.hr, { width: "22%" }]} />
+                <View style={[styles.hr, { width: "16%" }]} />
+                <View style={[styles.hr, { width: "10%" }]} />
+            </View>
             <Image style={styles.image} source={logo} />
-			<Text style={styles.text}>Мы поможем тебе погрузиться в историю самым интересным и полезным способом!</Text>
-			<View style={styles.buttonContainer}>
-            	<RegistrationPageButton title="Подробнее" />
-			</View>
+            <Text style={styles.text}>
+                Мы поможем тебе погрузиться в историю самым интересным и
+                полезным способом!
+            </Text>
+            <View style={styles.buttonContainer}>
+                <RegistrationPageButton
+                    title="Подробнее"
+                    nextSlide={nextSlide}
+                />
+            </View>
         </View>
     );
 }
@@ -28,51 +34,49 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-		height: "100%"
+        height: "100%",
     },
 
-	image: {
-		resizeMode: "contain",
-		width: "80%",
-		height: "20%",
-		marginTop: "-20%"
-	},
+    image: {
+        resizeMode: "contain",
+        width: "80%",
+        height: "20%",
+        marginTop: "-20%",
+    },
 
-	text: {
-		fontSize: 19,
-		padding: 10,
-		marginTop: 30,
-		width: "75%",
-		textAlign: "center",
-		lineHeight: 23,
-		fontWeight: "500"
-	},
+    text: {
+        fontSize: 19,
+        padding: 5,
+        width: "75%",
+        textAlign: "center",
+        lineHeight: 23,
+        fontWeight: "500",
+    },
 
-	buttonContainer: {
-		position: "absolute",
-		width: "100%",
-		bottom: "15%",
-		flex: 1,
-		alignItems: "center",
+    buttonContainer: {
+        position: "absolute",
+        width: "100%",
+        bottom: "15%",
+        flex: 1,
+        alignItems: "center",
         justifyContent: "center",
-	},
+    },
 
-	hr: {
+    hr: {
         height: "0.1%",
         width: "35%",
-		borderRadius: 100,
+        borderRadius: 100,
         borderTopWidth: 7,
         borderColor: "#FFAB49",
-        marginBottom: 12.5 ,
+        marginBottom: 12.5,
     },
 
-
-	hrContainer: {
-		position: "absolute",
-		top: "7%",
-		flex: 1,
-		alignItems: "flex-end",
-		width: "100%",
-		paddingRight: 20
-	}
+    hrContainer: {
+        position: "absolute",
+        top: "7%",
+        flex: 1,
+        alignItems: "flex-end",
+        width: "100%",
+        paddingRight: 20,
+    },
 });

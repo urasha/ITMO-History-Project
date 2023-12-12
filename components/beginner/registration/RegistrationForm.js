@@ -1,5 +1,5 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
-import RegistrationInput from "./RegistrationInput";
+import LoginInput from "./LoginInput";
 
 const backgroundImage = require('../../../assets/registration/registrationBackground.png');
 
@@ -7,8 +7,9 @@ export default function RegistrationForm() {
   return (
     <ImageBackground source={backgroundImage} style={styles.coverImage}>
       <View style={styles.input}>
-        <RegistrationInput placeholder="Логин" />
-        <RegistrationInput placeholder="Пароль" />
+        <LoginInput placeholder="Логин" />
+        <LoginInput placeholder="Пароль" isSecured={true} />
+        <LoginInput placeholder="Подтверждение пароля" isSecured={true} />
       </View>
     </ImageBackground>
   );
