@@ -1,15 +1,16 @@
 import { View, StyleSheet } from "react-native";
 import HeaderText from "./HeaderText";
-import RegistrationPageButton from "../../common/RegistrationPageButton";
+import Button from "../../common/RegistrationPageButton";
 import RegistrationForm from "./RegistrationForm";
+import RegistrationPageButton from "../../common/RegistrationPageButton";
 
-export default function RegistrationPage({ title }) {
+export default function RegistrationPage(props) {
     return (
         <View style={styles.container}>
-            <HeaderText>{title}</HeaderText>
+            <HeaderText>{props.title}</HeaderText>
             <View style={styles.hr} />
             <RegistrationForm />
-            <RegistrationPageButton title="Создать аккаунт" />
+            <Button title="Войти" onPress={}/>
         </View>
     );
 }
