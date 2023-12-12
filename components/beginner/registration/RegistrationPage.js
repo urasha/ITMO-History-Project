@@ -10,7 +10,7 @@ export default function RegistrationPage(props) {
             <HeaderText>{props.title}</HeaderText>
             <View style={styles.hr} />
             <RegistrationForm />
-            <Button title="Войти" onPress={}/>
+            <Button title="Войти"/>
         </View>
     );
 }

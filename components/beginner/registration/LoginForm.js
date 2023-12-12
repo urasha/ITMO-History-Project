@@ -9,13 +9,13 @@ export default function LoginForm({ email, password, setEmail, setPassword }) {
 
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
     const [isCorrectPassword, setIsCorrectPassword] = useState(true);
-     connection.getConnection(function (err, connection) {
-        connection.query('SELECT * FROM Users WHERE name = ${email} AND password = ${password}', function (error, results, fields) {
-            if (error) throw error;
-            console.log(results);
-            res.send(results);
-        });
-    });
+    //  connection.getConnection(function (err, connection) {
+    //     connection.query('SELECT * FROM Users WHERE name = ${email} AND password = ${password}', function (error, results, fields) {
+    //         if (error) throw error;
+    //         console.log(results);
+    //         res.send(results);
+    //     });
+    // });
     return (
         <ImageBackground source={backgroundImage} style={styles.coverImage}>
             <View style={styles.input}>
