@@ -9,7 +9,6 @@ export default function Header({ text }) {
     <ellipse cx="9.50033" cy="3.01544" rx="2.58389" ry="2.51544" fill="#E8DED4" stroke="#535352"/>
     </svg>
     `
-
     const profileIcon = `
     <svg width="30px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="6" r="4" stroke="white" stroke-width="1.5"/>

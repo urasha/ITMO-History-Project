@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 0,
         width: "100%",
-        height: "15%",
-        maxHeight: 150
+        height: "100%",
+        maxHeight: 200
     }
 });
