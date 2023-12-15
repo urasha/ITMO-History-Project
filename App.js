@@ -1,14 +1,16 @@
+import Navbar from './components/navbar/Navbar';
 import { StatusBar } from 'expo-status-bar';
-import RegistrationPage from './components/beginner/registration/RegistrationPage'
-import IntroPages from './components/beginner/IntroPages';
 import MapPage from './components/map/MapPage';
+import { View } from 'react-native';
 
 export default function App() {
   return (
-    <MapPage />
-  );
+    // <IntroPages />
+    // <View style={{flex: 1}}>
+    //   <Navbar />
 
-//   return (
-//     <RegistrationPage title='Регистрация' />
-//   );
+    //   <StatusBar hidden />
+    // </View>
+    <Navbar/>
+  );
 }
