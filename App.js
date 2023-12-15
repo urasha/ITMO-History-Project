@@ -2,6 +2,7 @@ import Navbar from './components/navbar/Navbar';
 import { StatusBar } from 'expo-status-bar';
 import MapPage from './components/map/MapPage';
 import { View } from 'react-native';
+import Main from './components/common/Main';
 
 export default function App() {
   return (
@@ -11,6 +12,9 @@ export default function App() {
 
     //   <StatusBar hidden />
     // </View>
-    <Navbar/>
+    
+    <>
+      <Main />
+    </>
   );
 }

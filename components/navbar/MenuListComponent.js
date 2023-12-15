@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable, Animated } from "react-native";
 import { SvgXml } from "react-native-svg";
 
 export default function MenuListComponent({ image, text }) {
@@ -8,20 +8,41 @@ export default function MenuListComponent({ image, text }) {
     </svg>
     `
 
+    // text opacity animation on press
+    const animated = new Animated.Value(1);
+
+    const fadeIn = () => {
+        Animated.timing(animated, {
+            toValue: 0.4,
+            duration: 100,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const fadeOut = () => {
+        Animated.timing(animated, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+        }).start();
+    };
+
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPressIn={fadeIn} onPressOut={fadeOut}>
             <SvgXml xml={image} />
             <View style={styles.textContainer}>
-                <Text style={styles.text}>{text}</Text>
+                <Animated.View style={{ opacity: animated }}>
+                    <Text style={styles.text}>{text}</Text>
+                </Animated.View>
             </View>
             <SvgXml xml={arrowIcon} style={styles.arrow} />
-        </View>
+        </Pressable>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "row",
+        flexDirection: "row", 
         alignItems: "center",
         left: 20,
     },
