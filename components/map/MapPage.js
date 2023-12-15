@@ -106,11 +106,11 @@ export default function MapPage() {
             }
         }
     }
-
+    
     return (
         <SafeAreaView style={{flex: 1}}>
             <SelectBox
-                label="SelectBox"
+                label="Выбор тестового маршрута"
                 options={pickerData}
                 value={selectedRoute}
                 onChange={onChange()}
