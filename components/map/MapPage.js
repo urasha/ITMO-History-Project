@@ -132,7 +132,7 @@ export default function MapPage({ isOpen }) {
 
     // without SelectBox
     return (
-        <SafeAreaView style={{ flex: 1, opacity: isOpen ? 0 : 1 }} pointerEvents={ isOpen ? "none" : "auto"}>
+        <SafeAreaView style={{ flex: 1, opacity: isOpen ? 0.1 : 1, backgroundColor: "white" }} pointerEvents={ isOpen ? "none" : "auto"}>
             <WebView
                 source={{ html }}
                 geolocationEnabled={true}

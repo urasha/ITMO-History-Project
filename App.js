@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import MapPage from './components/map/MapPage';
 import { View } from 'react-native';
 import Main from './components/common/Main';
+import FavouritePlaces from './components/navbar/FavouritePlaces';
 
 export default function App() {
   return (
@@ -13,8 +14,9 @@ export default function App() {
     //   <StatusBar hidden />
     // </View>
     
-    <>
-      <Main />
-    </>
+    // <>
+    //   <Main />
+    // </>
+    <FavouritePlaces />
   );
 }
