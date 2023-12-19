@@ -13,8 +13,7 @@ export default function FavouritePlaces({  }) {
     let places = [];
 
     return (
-        <View style={[styles.container, { top: 0 }]}>
-            <Header text="Любимые места" changableIcon={backArrowIcon} />
+        <View style={[styles.container]}>
 
             {
             places.length == 0 ? 
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "#2C2C2CE5",
-        position: "absolute",
     },
 
     noPlacesText: {
