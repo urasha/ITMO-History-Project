@@ -14,9 +14,9 @@ export default function App() {
     //   <StatusBar hidden />
     // </View>
     
-    // <>
-    //   <Main />
-    // </>
-    <FavouritePlaces />
+    <>
+      <Main />
+    </>
+    // <FavouritePlaces />
   );
 }
