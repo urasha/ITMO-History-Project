@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import {
     Text,
     View,
@@ -9,7 +10,13 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-export default function AddFavouritePlaceForm() {
+export default function AddFavouritePlaceForm({
+    setFavouritePlacesData,
+    favouritePlacesData,
+    setCurrentPage,
+    setStackOfPages,
+    stackOfPages,
+}) {
     const {
         register,
         setValue,
@@ -26,6 +33,11 @@ export default function AddFavouritePlaceForm() {
     });
     const onSubmit = (data) => {
         console.log(data);
+        favouritePlacesData.push(data);
+        setFavouritePlacesData(favouritePlacesData)
+        stackOfPages.pop();
+        setCurrentPage(stackOfPages.at(-1));
+        setStackOfPages(stackOfPages);
     };
 
     const onChange = (arg) => {
@@ -89,8 +101,8 @@ export default function AddFavouritePlaceForm() {
             >
                 <View style={styles.button}>
                     <Button
+                        color="#ec5990"
                         style={styles.buttonInner}
-                        color="#fff"
                         title="Сбросить"
                         onPress={() => {
                             reset({
@@ -105,7 +117,7 @@ export default function AddFavouritePlaceForm() {
 
                 <View style={styles.button}>
                     <Button
-                        color="#fff"
+                        color="#ec5990"
                         style={styles.buttonInner}
                         title="Сохранить"
                         onPress={() => {

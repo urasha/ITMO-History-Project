@@ -1,9 +1,9 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useState } from "react";
 
-export default function FavouritePlaces({ setCurrentPage, setStackOfPages, stackOfPages }) {
-
-    let places = [];
-
+export default function FavouritePlaces({ setCurrentPage, setStackOfPages, stackOfPages, favouritePlacesData}) {
+    
+    const places = favouritePlacesData;
     return (
         <View style={[styles.container]}>
 
@@ -12,7 +12,9 @@ export default function FavouritePlaces({ setCurrentPage, setStackOfPages, stack
             <View style={styles.noPlacesContainer}>
                 <Text style={styles.noPlacesText}>🤷 У вас пока нет любимых мест...</Text>
             </View> : 
-            <></>
+            places.map((info, id) => {
+                return <Text key={id}>{info["title"]}</Text>
+            })
             }
 
             <TouchableOpacity style={styles.addFavouriteContainer} onPress={() => {
