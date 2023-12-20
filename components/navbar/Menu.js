@@ -24,6 +24,7 @@ export default function Menu({ isOpen, setisOpen }) {
     const userName = "Мария"; // from db
     const [currentPage, setCurrentPage] = useState("MenuList");
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
+    const [favouritePlacesData, setFavouritePlacesData] = useState([]);
     const textVars = {
         "MenuList": userName,
         "FavouritePlaces": "Любимые места",
@@ -43,6 +44,7 @@ export default function Menu({ isOpen, setisOpen }) {
             ) : null}
             {currentPage === "FavouritePlaces" ? (
                 <FavouritePlaces
+                    favouritePlacesData={favouritePlacesData}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
@@ -50,6 +52,8 @@ export default function Menu({ isOpen, setisOpen }) {
             ) : null}
             {currentPage === "AddFavouritePlaceForm" ? (
                 <AddFavouritePlaceForm
+                    favouritePlacesData={favouritePlacesData}
+                    setFavouritePlacesData={setFavouritePlacesData}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
