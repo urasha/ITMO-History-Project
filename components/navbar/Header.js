@@ -12,7 +12,7 @@ export default function Header({ text, changableIcon, stackOfPages, setStackOfPa
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={{ width: 25, height: 25, top: 3.5 }} onPress={() => {
+            <TouchableOpacity style={{ justifyContent: "center", alignItems: "center", width: 50, height: 50 }} onPress={() => {
                 if (stackOfPages.length !== 1) {
                     stackOfPages.pop()
                     setCurrentPage(stackOfPages.at(-1));
