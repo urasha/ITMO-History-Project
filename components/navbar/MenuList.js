@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import MenuListComponent from "./MenuListComponent";
 
-export default function MenuList() {
+export default function MenuList({ textVars, setCurrentPage, setStackOfPages, stackOfPages }) {
     const favoritePlacesIcon = `
     <svg width="50" height="50" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="30" height="30" rx="8" fill="#E8432F"/>
@@ -40,9 +40,9 @@ export default function MenuList() {
 
     return (
         <View style={styles.container}>
-            <MenuListComponent image={favoritePlacesIcon} text="Любимые места"/>
-            <MenuListComponent image={routesIcon} text="Маршруты" />
-            <MenuListComponent image={settingsIcon} text="Настройки" />
+            <MenuListComponent image={favoritePlacesIcon} text={textVars["FavouritePlaces"]} textVars={textVars} setCurrentPage={setCurrentPage} setStackOfPages={setStackOfPages} stackOfPages={stackOfPages} />
+            <MenuListComponent image={routesIcon} text={textVars["RoutesByDeveloper"]} textVars={textVars} setCurrentPage={setCurrentPage} setStackOfPages={setStackOfPages} stackOfPages={stackOfPages} />
+            <MenuListComponent image={settingsIcon} text={textVars["Settings"]} textVars={textVars} setCurrentPage={setCurrentPage} setStackOfPages={setStackOfPages} stackOfPages={stackOfPages} />
         </View>
     );
 }
