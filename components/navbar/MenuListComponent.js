@@ -31,10 +31,19 @@ export default function MenuListComponent({ image, text, textVars, setCurrentPag
         <Pressable
             style={styles.container}
             onPress={() => {
-                console.log(text)
                 if (text === textVars["FavouritePlaces"]) {
                     setCurrentPage("FavouritePlaces")
                     stackOfPages.push("FavouritePlaces")
+                    setStackOfPages(stackOfPages)
+                }
+                if (text === textVars["Routes"]) {
+                    setCurrentPage("Routes")
+                    stackOfPages.push("Routes")
+                    setStackOfPages(stackOfPages)
+                }
+                if (text === textVars["Settings"]) {
+                    setCurrentPage("Settings")
+                    stackOfPages.push("Settings")
                     setStackOfPages(stackOfPages)
                 }
             }}
@@ -72,7 +81,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: "#E8DED44D",
         width: "80%",
-        height: 60,
+        height: 47,
     },
 
     arrow: {
