@@ -8,7 +8,7 @@ export default function Main() {
     return (
         <>
             <Navbar isOpen={isOpen} setisOpen={setisOpen} />
-            <MapPage isOpen={isOpen} />
+            {/* <MapPage isOpen={isOpen} /> */}
         </>
     )
 }
