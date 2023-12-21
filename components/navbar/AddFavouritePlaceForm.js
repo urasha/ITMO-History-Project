@@ -32,9 +32,8 @@ export default function AddFavouritePlaceForm({
         },
     });
     const onSubmit = (data) => {
-        console.log(data);
         favouritePlacesData.push(data);
-        setFavouritePlacesData(favouritePlacesData)
+        setFavouritePlacesData(favouritePlacesData);
         stackOfPages.pop();
         setCurrentPage(stackOfPages.at(-1));
         setStackOfPages(stackOfPages);
@@ -101,7 +100,7 @@ export default function AddFavouritePlaceForm({
             >
                 <View style={styles.button}>
                     <Button
-                        color="#ec5990"
+                        color="#fff"
                         style={styles.buttonInner}
                         title="Сбросить"
                         onPress={() => {
@@ -117,7 +116,7 @@ export default function AddFavouritePlaceForm({
 
                 <View style={styles.button}>
                     <Button
-                        color="#ec5990"
+                        color="#fff"
                         style={styles.buttonInner}
                         title="Сохранить"
                         onPress={() => {

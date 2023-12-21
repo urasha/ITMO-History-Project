@@ -5,6 +5,8 @@ import MenuList from "./MenuList";
 import { useState } from "react";
 import FavouritePlaces from "./FavouritePlaces";
 import AddFavouritePlaceForm from "./AddFavouritePlaceForm";
+import FavouritePlaceInfoPage from "./FavouritePlaceInfoPage";
+import Routes from "./Routes";
 
 export default function Menu({ isOpen, setisOpen }) {
     const manIcon = `
@@ -24,16 +26,32 @@ export default function Menu({ isOpen, setisOpen }) {
     const userName = "Мария"; // from db
     const [currentPage, setCurrentPage] = useState("MenuList");
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
-    const [favouritePlacesData, setFavouritePlacesData] = useState([]);
+    const [favouritePlacesData, setFavouritePlacesData] = useState([]); // from db
     const textVars = {
-        "MenuList": userName,
-        "FavouritePlaces": "Любимые места",
-        "RoutesByDeveloper": "Маршруты",
-        "Settings": "Настройки",
-    }
+        MenuList: userName,
+        FavouritePlaces: "Любимые места",
+        Settings: "Настройки",
+        AddFavouritePlaceForm: "Любимые места",
+        FavouritePlaceInfoPage: "Любимые места",
+        Routes: "Маршруты",
+    };
+
     return (
         <View style={[styles.container, { top: isOpen ? 0 : "-100%" }]}>
-            <Header text={textVars[currentPage]} changableIcon={currentPage === "MenuList" ? manIcon : backArrowIcon} setStackOfPages={setStackOfPages} stackOfPages={stackOfPages} setCurrentPage={setCurrentPage}/>
+            {favouritePlacesData.map((info, id) => {
+                console.log(info);
+                console.log(id);
+            })}
+
+            <Header
+                text={textVars[currentPage]}
+                changableIcon={
+                    currentPage === "MenuList" ? manIcon : backArrowIcon
+                }
+                setStackOfPages={setStackOfPages}
+                stackOfPages={stackOfPages}
+                setCurrentPage={setCurrentPage}
+            />
             {currentPage === "MenuList" ? (
                 <MenuList
                     textVars={textVars}
@@ -59,6 +77,22 @@ export default function Menu({ isOpen, setisOpen }) {
                     stackOfPages={stackOfPages}
                 />
             ) : null}
+            {currentPage === "FavouritePlaceInfoPage" ? (
+                <FavouritePlaceInfoPage
+                    favouritePlacesData={favouritePlacesData}
+                    setFavouritePlacesData={setFavouritePlacesData}
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
+                />
+            ) : null}
+            {currentPage === "Routes" ? (
+                <Routes
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
+                />
+            ) : null}
             <ExitButton
                 setisOpen={setisOpen}
                 setStackOfPages={setStackOfPages}
@@ -73,7 +107,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-        backgroundColor: "#2C2C2CE5",
+        backgroundColor: "#252525E5",
         position: "absolute",
     },
 });
