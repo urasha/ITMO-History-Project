@@ -8,6 +8,7 @@ import LoginPage from "./registration/LoginPage";
 import AbilitiesPage from "../beginner/abilities/AbilitiesPage";
 import GreetingPage from "../beginner/greetingPage/GreetingPage";
 import { useEffect, useRef, useState } from "react";
+import RegistrationPage from "./registration/RegistrationPage";
 
 const window = Dimensions.get("window");
 
@@ -19,11 +20,11 @@ export default function IntroPages() {
         carouselRef.current.next();
     }
 
-    // We need only first two
     const pages = [
         <GreetingPage nextSlide={nextSlide} />,
         <AbilitiesPage nextSlide={nextSlide} title="Возможность" />,
-        <LoginPage title="Невская застава" />,
+        // <LoginPage title="Невская застава" />,
+        <RegistrationPage title="Регистрация" />
     ];
 
     return (

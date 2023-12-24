@@ -7,6 +7,7 @@ import FavouritePlaces from "./FavouritePlaces";
 import AddFavouritePlaceForm from "./AddFavouritePlaceForm";
 import FavouritePlaceInfoPage from "./FavouritePlaceInfoPage";
 import Routes from "./Routes";
+import Settings from "./Settings";
 
 export default function Menu({ isOpen, setisOpen }) {
     const manIcon = `
@@ -88,6 +89,13 @@ export default function Menu({ isOpen, setisOpen }) {
             ) : null}
             {currentPage === "Routes" ? (
                 <Routes
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
+                />
+            ) : null}
+            {currentPage === "Settings" ? (
+                <Settings
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}

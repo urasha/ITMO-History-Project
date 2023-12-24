@@ -45,8 +45,6 @@ export default function AddFavouritePlaceForm({
         };
     };
 
-    console.log("errors", errors);
-
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Название</Text>

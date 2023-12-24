@@ -1,16 +1,57 @@
 import { View, StyleSheet } from "react-native";
 import HeaderText from "./HeaderText";
-import Button from "../../common/RegistrationPageButton";
 import RegistrationForm from "./RegistrationForm";
 import RegistrationPageButton from "../../common/RegistrationPageButton";
+import { useState } from "react";
+import axios from "axios";
 
 export default function RegistrationPage(props) {
+    function register() {
+        const _email = email;
+        const _password = password;
+
+        const email_regular = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        const password_regular = /^.{6,}$/;
+
+        // validate password & email
+        if (password_regular.test(_password) == false || email_regular.test(_email) == false) {
+            alert("Email или пароль некорректны!")
+            return;
+        }
+
+        const url = "https://hist-museum.onrender.com/api/auth/local/register";
+
+        axios
+            .post(url, {
+                username: _email.split('@')[0],
+                email: _email,
+                password: _password,
+            })
+            .then((response) => {
+                console.log("Register success!");
+            })
+            .catch((error) => {
+                console.log("An error occurred:", error.response);
+            });
+    }
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     return (
         <View style={styles.container}>
             <HeaderText>{props.title}</HeaderText>
             <View style={styles.hr} />
-            <RegistrationForm />
-            <Button title="Войти"/>
+            <RegistrationForm
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+            />
+            <RegistrationPageButton
+                title="Создать аккаунт"
+                validate={register}
+            />
         </View>
     );
 }
