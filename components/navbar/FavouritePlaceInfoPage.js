@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default function FavouritePlaceInfoPage({
     favouritePlacesData,
@@ -6,6 +6,13 @@ export default function FavouritePlaceInfoPage({
     setCurrentPage,
     setStackOfPages,
     stackOfPages,
+    favouritePlaceInfo
 }) {
-    return <Text>Здесь будет описание объектов</Text>;
+    return (
+        <View style={{}}>
+            <Text>Адрес: {favouritePlaceInfo.address}</Text>
+            <Text>Описание: {favouritePlaceInfo.description}</Text>
+            <Text>Название: {favouritePlaceInfo.title}</Text>
+        </View>
+    )
 }

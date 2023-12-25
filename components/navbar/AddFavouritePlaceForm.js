@@ -32,6 +32,7 @@ export default function AddFavouritePlaceForm({
         },
     });
     const onSubmit = (data) => {
+        // create post request
         favouritePlacesData.push(data);
         setFavouritePlacesData(favouritePlacesData);
         stackOfPages.pop();

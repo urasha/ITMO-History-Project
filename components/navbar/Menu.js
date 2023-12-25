@@ -33,11 +33,31 @@ export default function Menu({ isOpen, setisOpen }) {
             console.log(error);
         }
     };
+    // const url = "https://hist-museum.onrender.com/api/auth/local";
+
+    // axios
+    //     .post(url, {
+    //         identifier: _email,
+    //         password: _password,
+    //     })
+    //     .then((response) => {
+    //         console.log("Login success!");
+    //         // setData("id", response.data["id"]);
+    //         setisLogin(true);
+    //     })
+    //     .catch((error) => {
+    //         alert("Неверный email или пароль");
+    //         console.log("An error occurred:", error.response);
+    //     });
 
     const userName = "Мария"; // from db
     const [currentPage, setCurrentPage] = useState("MenuList");
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
+
     const [favouritePlacesData, setFavouritePlacesData] = useState([]); // from db
+    
+    const [favouritePlaceInfo, setFavouritePlaceInfo] = useState(null);
+
     const textVars = {
         MenuList: userName,
         FavouritePlaces: "Любимые места",
@@ -77,6 +97,7 @@ export default function Menu({ isOpen, setisOpen }) {
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
+                    setFavouritePlaceInfo={setFavouritePlaceInfo}
                 />
             ) : null}
             {currentPage === "AddFavouritePlaceForm" ? (
@@ -90,6 +111,7 @@ export default function Menu({ isOpen, setisOpen }) {
             ) : null}
             {currentPage === "FavouritePlaceInfoPage" ? (
                 <FavouritePlaceInfoPage
+                    favouritePlaceInfo={favouritePlaceInfo}
                     favouritePlacesData={favouritePlacesData}
                     setFavouritePlacesData={setFavouritePlacesData}
                     setCurrentPage={setCurrentPage}

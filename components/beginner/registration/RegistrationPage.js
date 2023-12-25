@@ -5,7 +5,7 @@ import RegistrationPageButton from "../../common/RegistrationPageButton";
 import { useState } from "react";
 import axios from "axios";
 
-export default function RegistrationPage(props) {
+export default function RegistrationPage({ title, isRegistrationOpen, setIsRegistrationOpen }) {
     function register() {
         const _email = email;
         const _password = password;
@@ -29,6 +29,7 @@ export default function RegistrationPage(props) {
             })
             .then((response) => {
                 console.log("Register success!");
+                setIsRegistrationOpen(false);
             })
             .catch((error) => {
                 console.log("An error occurred:", error.response);
@@ -39,8 +40,8 @@ export default function RegistrationPage(props) {
     const [password, setPassword] = useState("");
 
     return (
-        <View style={styles.container}>
-            <HeaderText>{props.title}</HeaderText>
+        <View style={[styles.container, {top: isRegistrationOpen ? 0 : "100%"}]}>
+            <HeaderText>{title}</HeaderText>
             <View style={styles.hr} />
             <RegistrationForm
                 email={email}
@@ -58,11 +59,13 @@ export default function RegistrationPage(props) {
 
 const styles = StyleSheet.create({
     container: {
+        position: "absolute",
         flex: 1,
         backgroundColor: "#E8DED4",
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
+        height: "100%"
     },
 
     hr: {
