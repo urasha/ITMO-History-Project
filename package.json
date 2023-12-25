@@ -11,8 +11,10 @@
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
     "@marcuzgabriel/reanimated-burger-menu": "^1.0.1",
+    "@react-native-async-storage/async-storage": "^1.18.2",
     "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
+    "axios": "^1.6.2",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "expo": "~49.0.15",
@@ -25,15 +27,21 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.49.2",
     "react-native": "0.72.6",
+    "react-native-awesome-slider": "^2.4.6",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-multi-selectbox": "^1.5.0",
+    "react-native-numeric-input": "^1.9.1",
+    "react-native-range-slider": "^0.1.2",
     "react-native-reanimated": "~3.3.0",
     "react-native-reanimated-carousel": "^3.5.1",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "13.9.0",
+    "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
-    "react-native-webview": "13.2.2"
+    "react-native-webview": "^13.2.2",
+    "rn-range-slider": "^2.2.2",
+    "sync-storage": "^0.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

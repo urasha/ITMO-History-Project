@@ -7,6 +7,8 @@ import FavouritePlaces from "./FavouritePlaces";
 import AddFavouritePlaceForm from "./AddFavouritePlaceForm";
 import FavouritePlaceInfoPage from "./FavouritePlaceInfoPage";
 import Routes from "./Routes";
+import Settings from "./Settings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Menu({ isOpen, setisOpen }) {
     const manIcon = `
@@ -22,6 +24,15 @@ export default function Menu({ isOpen, setisOpen }) {
     <path fill-rule="evenodd" clip-rule="evenodd" d="M0 7.5C0 7.78416 0.118526 8.05668 0.329505 8.25761L7.0795 14.6862C7.51884 15.1046 8.23116 15.1046 8.6705 14.6862C9.10983 14.2678 9.10983 13.5894 8.6705 13.171L2.71599 7.5L8.6705 1.82904C9.10983 1.41062 9.10983 0.732233 8.6705 0.313814C8.23116 -0.104605 7.51884 -0.104605 7.0795 0.313814L0.329505 6.74238C0.118526 6.94332 0 7.21584 0 7.5Z" fill="#E8DED4" fill-opacity="0.3"/>
     </svg>
     `;
+
+    const getData = async (key) => {
+        try {
+            const savedUser = await AsyncStorage.getItem(key);
+            return JSON.parse(savedUser);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const userName = "Мария"; // from db
     const [currentPage, setCurrentPage] = useState("MenuList");
@@ -88,6 +99,13 @@ export default function Menu({ isOpen, setisOpen }) {
             ) : null}
             {currentPage === "Routes" ? (
                 <Routes
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
+                />
+            ) : null}
+            {currentPage === "Settings" ? (
+                <Settings
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}

@@ -2,6 +2,15 @@ import { TouchableOpacity } from "react-native";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { SvgXml } from "react-native-svg";
 
+const getData = async (key) => {
+    try {
+        const savedUser = await AsyncStorage.getItem(key);
+        return JSON.parse(savedUser);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export default function Header({
     text,
     changableIcon,
@@ -9,6 +18,7 @@ export default function Header({
     setStackOfPages,
     setCurrentPage,
 }) {
+    
     const profileIcon = `
     <svg width="34px" height="39px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="6" r="4" stroke="white" stroke-width="1.5"/>
