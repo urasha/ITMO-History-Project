@@ -8,7 +8,7 @@ export default function EmailInput({ email, setEmail, setIsCorrectEmail }) {
 
     return (
         <LoginInput
-            placeholder="Логин"
+            placeholder="Email (логин)"
             value={email}
             setValue={setEmail}
             validate={validate}
