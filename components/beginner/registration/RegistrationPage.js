@@ -13,7 +13,7 @@ export default function RegistrationPage(props) {
         const email_regular = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         const password_regular = /^.{6,}$/;
 
-        // validate password & email
+        // check is correct password & email
         if (password_regular.test(_password) == false || email_regular.test(_email) == false) {
             alert("Email или пароль некорректны!")
             return;

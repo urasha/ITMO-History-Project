@@ -2,6 +2,8 @@ import { View, StyleSheet, TextInput, Text, Button } from "react-native";
 import NumericInput from "react-native-numeric-input";
 import { useForm, Controller } from "react-hook-form";
 import * as React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function Settings() {
     const {
@@ -15,8 +17,38 @@ export default function Settings() {
         },
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const setData = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getData = async (key) => {
+        try {
+            const savedUser = await AsyncStorage.getItem(key);
+            return JSON.parse(savedUser);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const onSubmit = async (data) => {
+        // const url = "https://hist-museum.onrender.com/api/users/:2";
+
+        // axios
+        //     .put(url, {
+        //         username: data["username"],
+        //     },)
+        //     .then((response) => {
+        //         console.log(response);
+        //     })
+        //     .catch((error) => {
+        //         console.log("An error occurred:", error.response);
+        //     });
+        
+        setData("fontSize", data["fontSize"]);
     };
 
     const onChange = (arg) => {
@@ -46,13 +78,15 @@ export default function Settings() {
             </View>
 
             <View style={styles.container}>
-                <Text style={styles.label}>Размер шрифта</Text>
+                <Text style={styles.label}>
+                    Размер текста описания объектов
+                </Text>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <NumericInput
                             onLimitReached={(isMax, msg) => console.log(msg)}
-                            maxValue={20}
+                            maxValue={18}
                             minValue={15}
                             totalWidth={150}
                             totalHeight={40}

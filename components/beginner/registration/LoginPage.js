@@ -4,8 +4,17 @@ import Button from "../../common/RegistrationPageButton";
 import LoginForm from "./LoginForm";
 import { useState } from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function LoginPage({ title }) {
+export default function LoginPage({ title, setisLogin }) {
+    const setData = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     function validate() {
         const _email = email;
         const _password = password;
@@ -19,8 +28,11 @@ export default function LoginPage({ title }) {
             })
             .then((response) => {
                 console.log("Login success!");
+                // setData("id", response.data["id"]);
+                setisLogin(true);
             })
             .catch((error) => {
+                alert("Неверный email или пароль");
                 console.log("An error occurred:", error.response);
             });
     }

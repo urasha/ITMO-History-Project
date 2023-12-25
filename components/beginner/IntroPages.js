@@ -12,8 +12,7 @@ import RegistrationPage from "./registration/RegistrationPage";
 
 const window = Dimensions.get("window");
 
-export default function IntroPages() {
-
+export default function IntroPages({ setisLogin }) {
     const carouselRef = useRef(null);
 
     function nextSlide() {
@@ -23,8 +22,8 @@ export default function IntroPages() {
     const pages = [
         <GreetingPage nextSlide={nextSlide} />,
         <AbilitiesPage nextSlide={nextSlide} title="Возможность" />,
-        // <LoginPage title="Невская застава" />,
-        <RegistrationPage title="Регистрация" />
+        <LoginPage title="Невская застава" setisLogin={setisLogin} />,
+        // <RegistrationPage title="Регистрация" />
     ];
 
     return (
