@@ -6,7 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function LoginPage({ title, setisLogin }) {
+export default function LoginPage({ title, setisLogin, setIsRegistrationOpen }) {
     const setData = async (key, value) => {
         try {
             await AsyncStorage.setItem(key, JSON.stringify(value));
@@ -27,8 +27,9 @@ export default function LoginPage({ title, setisLogin }) {
                 password: _password,
             })
             .then((response) => {
+                console.log(response.data)
                 console.log("Login success!");
-                // setData("id", response.data["id"]);
+                setData("jwt", response.data["jwt"]);
                 setisLogin(true);
             })
             .catch((error) => {
@@ -49,6 +50,7 @@ export default function LoginPage({ title, setisLogin }) {
                 setEmail={setEmail}
                 password={password}
                 setPassword={setPassword}
+                setIsRegistrationOpen={setIsRegistrationOpen}
             />
             <Button title="Войти" validate={validate} />
         </View>

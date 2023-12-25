@@ -5,18 +5,17 @@ import IntroPages from "../beginner/IntroPages";
 
 export default function Main() {
     const [isOpen, setisOpen] = useState(false);
-    const [isLogin, setisLogin] = useState(true);
+    const [isLogin, setisLogin] = useState(false);
 
     return (
         <>
-            {isLogin == false ? <IntroPages setisLogin={setisLogin} /> : <></>}
-            {isLogin == true ? (
+            {isLogin == false ? (
+                <IntroPages setisLogin={setisLogin} />
+            ) : (
                 <>
                     <Navbar isOpen={isOpen} setisOpen={setisOpen} />
                     <MapPage isOpen={isOpen} />
                 </>
-            ) : (
-                <></>
             )}
         </>
     );

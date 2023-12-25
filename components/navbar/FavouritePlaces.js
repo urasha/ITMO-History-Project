@@ -13,6 +13,7 @@ export default function FavouritePlaces({
     setStackOfPages,
     stackOfPages,
     favouritePlacesData,
+    setFavouritePlaceInfo,
 }) {
     const places = favouritePlacesData;
     const heightOfScrollView = useWindowDimensions().height * 0.65;
@@ -46,6 +47,7 @@ export default function FavouritePlaces({
                                         alignItems: "center",
                                     }}
                                     onPress={() => {
+                                        setFavouritePlaceInfo(favouritePlacesData[id]);
                                         stackOfPages.push(
                                             "FavouritePlaceInfoPage"
                                         );

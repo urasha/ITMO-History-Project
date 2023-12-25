@@ -1,13 +1,28 @@
 import { View, StyleSheet, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function BurgerButton({ isOpen, setisOpen }) {
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem("jwt");
+            return value;
+        } catch (e) {
+            // error reading value
+        }
+    };
     return (
-        <Pressable onPress={() => setisOpen(true)} style={[styles.button, { opacity: isOpen ? 0 : 0.9 }]} >
+        <Pressable
+            onPress={async () => {
+                setisOpen(true);
+                console.log(await getData());
+            }}
+            style={[styles.button, { opacity: isOpen ? 0 : 0.9 }]}
+        >
             <View style={[styles.hr, { width: "12%" }]} />
             <View style={[styles.hr, { width: "9%" }]} />
             <View style={[styles.hr, { width: "12%" }]} />
         </Pressable>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -45,6 +60,6 @@ const styles = StyleSheet.create({
         top: 0,
         width: "100%",
         height: "100%",
-        maxHeight: 200
-    }
+        maxHeight: 200,
+    },
 });

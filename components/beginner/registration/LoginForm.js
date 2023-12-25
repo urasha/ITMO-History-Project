@@ -3,7 +3,7 @@ import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import { useState } from "react";
 
-export default function LoginForm({ email, password, setEmail, setPassword }) {
+export default function LoginForm({ email, password, setEmail, setPassword, setIsRegistrationOpen }) {
     const [isCorrectEmail, setIsCorrectEmail] = useState(true);
     const [isCorrectPassword, setIsCorrectPassword] = useState(true);
 
@@ -14,6 +14,7 @@ export default function LoginForm({ email, password, setEmail, setPassword }) {
             <View style={styles.input}>
                 <EmailInput value={email} setEmail={setEmail} setIsCorrectEmail={setIsCorrectEmail} />
                 <PasswordInput value={password} setPassword={setPassword} setIsCorrectPassword={setIsCorrectPassword} />
+                <Text style={{padding: 5, color: "#2c63c9", fontWeight: "bold"}} onPress={() => setIsRegistrationOpen(true)}>Нет аккаунта? Создать аккаунт</Text>
             </View>
         </ImageBackground>
     );

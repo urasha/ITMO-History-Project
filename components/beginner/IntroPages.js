@@ -13,6 +13,8 @@ import RegistrationPage from "./registration/RegistrationPage";
 const window = Dimensions.get("window");
 
 export default function IntroPages({ setisLogin }) {
+    const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+    
     const carouselRef = useRef(null);
 
     function nextSlide() {
@@ -22,7 +24,7 @@ export default function IntroPages({ setisLogin }) {
     const pages = [
         <GreetingPage nextSlide={nextSlide} />,
         <AbilitiesPage nextSlide={nextSlide} title="Возможность" />,
-        <LoginPage title="Невская застава" setisLogin={setisLogin} />,
+        <LoginPage title="Невская застава" setisLogin={setisLogin} setIsRegistrationOpen={setIsRegistrationOpen} />,
         // <RegistrationPage title="Регистрация" />
     ];
 
@@ -38,6 +40,7 @@ export default function IntroPages({ setisLogin }) {
                 scrollAnimationDuration={500}
                 renderItem={({ index }) => pages[index]}
             />
+            <RegistrationPage isRegistrationOpen={isRegistrationOpen} setIsRegistrationOpen={setIsRegistrationOpen} title="Регистрация"></RegistrationPage>
             <StatusBar style="auto" />
         </View>
     );
