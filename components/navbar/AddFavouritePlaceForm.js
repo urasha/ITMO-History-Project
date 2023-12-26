@@ -31,6 +31,7 @@ export default function AddFavouritePlaceForm({
         },
     });
 
+    // FIXME: bad post request, 400
     const onSubmit = (data) => {
         axios
             .post("https://hist-museum.onrender.com/api/liked-objects", {
@@ -41,11 +42,11 @@ export default function AddFavouritePlaceForm({
                 name: data.name,
                 description: data.description,
                 address: data.address,
-                picture: null,
-                users_permissions_user: 2
+                // picture: ...,
+                // users_permissions_user: ...,
             })
             .then((response) => {
-                console.log(response);
+                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);

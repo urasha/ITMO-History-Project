@@ -1,5 +1,4 @@
 import { View, StyleSheet, Pressable } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function BurgerButton({ isOpen, setisOpen }) {
     
