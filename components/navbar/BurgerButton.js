@@ -2,20 +2,10 @@ import { View, StyleSheet, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function BurgerButton({ isOpen, setisOpen }) {
-    const getData = async () => {
-        try {
-            const value = await AsyncStorage.getItem("jwt");
-            return value;
-        } catch (e) {
-            // error reading value
-        }
-    };
+    
     return (
         <Pressable
-            onPress={async () => {
-                setisOpen(true);
-                console.log(await getData());
-            }}
+            onPress={() => setisOpen(true)}
             style={[styles.button, { opacity: isOpen ? 0 : 0.9 }]}
         >
             <View style={[styles.hr, { width: "12%" }]} />

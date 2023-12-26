@@ -27,14 +27,13 @@ export default function LoginPage({ title, setisLogin, setIsRegistrationOpen }) 
                 password: _password,
             })
             .then((response) => {
-                console.log(response.data)
                 console.log("Login success!");
-                setData("jwt", response.data["jwt"]);
+                setData("id", response.data.user.id);
                 setisLogin(true);
             })
             .catch((error) => {
                 alert("Неверный email или пароль");
-                console.log("An error occurred:", error.response);
+                console.log("ERROR!!!");
             });
     }
 

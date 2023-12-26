@@ -2,13 +2,14 @@ import { View, StyleSheet } from "react-native";
 import Header from "./Header";
 import ExitButton from "./ExitButton";
 import MenuList from "./MenuList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FavouritePlaces from "./FavouritePlaces";
 import AddFavouritePlaceForm from "./AddFavouritePlaceForm";
 import FavouritePlaceInfoPage from "./FavouritePlaceInfoPage";
 import Routes from "./Routes";
 import Settings from "./Settings";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import getData from "../common/getData";
+import axios from "axios";
 
 export default function Menu({ isOpen, setisOpen }) {
     const manIcon = `
@@ -25,38 +26,71 @@ export default function Menu({ isOpen, setisOpen }) {
     </svg>
     `;
 
-    const getData = async (key) => {
-        try {
-            const savedUser = await AsyncStorage.getItem(key);
-            return JSON.parse(savedUser);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    // const url = "https://hist-museum.onrender.com/api/auth/local";
-
-    // axios
-    //     .post(url, {
-    //         identifier: _email,
-    //         password: _password,
-    //     })
-    //     .then((response) => {
-    //         console.log("Login success!");
-    //         // setData("id", response.data["id"]);
-    //         setisLogin(true);
-    //     })
-    //     .catch((error) => {
-    //         alert("Неверный email или пароль");
-    //         console.log("An error occurred:", error.response);
-    //     });
-
-    const userName = "Мария"; // from db
+    const [userName, setUserName] = useState("Anonymous"); // from db
     const [currentPage, setCurrentPage] = useState("MenuList");
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
 
     const [favouritePlacesData, setFavouritePlacesData] = useState([]); // from db
-    
     const [favouritePlaceInfo, setFavouritePlaceInfo] = useState(null);
+
+    async function getDataFromDb() {
+        const id = await getData("id");
+
+        // get username
+        axios
+            .get(`https://hist-museum.onrender.com/api/users/${id}`, {
+                headers: {
+                    Authorization:
+                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                },
+            })
+            .then((response) => {
+                setUserName(response.data["username"]);
+            })
+            .catch((error) => {
+                console.log("ERROR WITH USERS!!!");
+            });
+
+        // get favourite places
+        axios
+            .get(
+                "https://hist-museum.onrender.com/api/liked-objects/?populate=*",
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                    },
+                }
+            )
+            .then((response) => {
+                response.data.data.forEach((el) => {
+                    if (
+                        userName ===
+                        el.attributes.users_permissions_user.data.attributes
+                            .username
+                    ) {
+                        const data = el.attributes;
+                        if (
+                            !favouritePlacesData.some((el) => {
+                                return (
+                                    data.address === el.address &&
+                                    data.description === el.description &&
+                                    data.name === el.name
+                                );
+                            })
+                        ) {
+                            favouritePlacesData.push(el.attributes);
+                        }
+                    }
+                    setFavouritePlacesData(favouritePlacesData);
+                });
+            })
+            .catch((error) => {
+                console.log("ERROR WITH FAVOURITE PLACES!!!");
+            });
+    }
+
+    getDataFromDb();
 
     const textVars = {
         MenuList: userName,
@@ -69,12 +103,8 @@ export default function Menu({ isOpen, setisOpen }) {
 
     return (
         <View style={[styles.container, { top: isOpen ? 0 : "-100%" }]}>
-            {favouritePlacesData.map((info, id) => {
-                console.log(info);
-                console.log(id);
-            })}
-
             <Header
+                textVars={textVars}
                 text={textVars[currentPage]}
                 changableIcon={
                     currentPage === "MenuList" ? manIcon : backArrowIcon

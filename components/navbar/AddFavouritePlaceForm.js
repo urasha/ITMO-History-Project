@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
     Text,
     View,
@@ -11,8 +12,6 @@ import {
 import { useForm, Controller } from "react-hook-form";
 
 export default function AddFavouritePlaceForm({
-    setFavouritePlacesData,
-    favouritePlacesData,
     setCurrentPage,
     setStackOfPages,
     stackOfPages,
@@ -26,15 +25,34 @@ export default function AddFavouritePlaceForm({
         formState: { errors },
     } = useForm({
         defaultValues: {
-            title: "",
+            name: "",
             description: "",
             address: "",
         },
     });
+
     const onSubmit = (data) => {
-        // create post request
-        favouritePlacesData.push(data);
-        setFavouritePlacesData(favouritePlacesData);
+        axios
+            .post("https://hist-museum.onrender.com/api/liked-objects", {
+                headers: {
+                    Authorization:
+                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                },
+                name: data.name,
+                description: data.description,
+                address: data.address,
+                picture: null,
+                users_permissions_user: 2
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        // favouritePlacesData.push(data);
+        // setFavouritePlacesData(favouritePlacesData);
         stackOfPages.pop();
         setCurrentPage(stackOfPages.at(-1));
         setStackOfPages(stackOfPages);
@@ -59,7 +77,7 @@ export default function AddFavouritePlaceForm({
                         value={value}
                     />
                 )}
-                name="title"
+                name="name"
                 rules={{ required: true }}
             />
             <Text style={styles.label}>Описание</Text>
@@ -104,7 +122,7 @@ export default function AddFavouritePlaceForm({
                         title="Сбросить"
                         onPress={() => {
                             reset({
-                                title: "",
+                                name: "",
                                 description: "",
                                 address: "",
                             });

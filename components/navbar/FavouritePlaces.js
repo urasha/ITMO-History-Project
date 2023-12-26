@@ -25,7 +25,6 @@ export default function FavouritePlaces({
 
     return (
         <View style={[styles.container]}>
-            {console.log(places.length, "here")}
             {places.length === 0 ? (
                 <View style={styles.noPlacesContainer}>
                     <Text style={styles.noPlacesText}>
@@ -58,7 +57,7 @@ export default function FavouritePlaces({
                                     }}
                                 >
                                     <Text style={styles.favouritePlaceText}>
-                                        {info["title"]}
+                                        {info["name"]}
                                     </Text>
                                     <SvgXml
                                         xml={arrowIcon}
