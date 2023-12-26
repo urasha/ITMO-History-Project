@@ -1,15 +1,6 @@
 import { TouchableOpacity } from "react-native";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { SvgXml } from "react-native-svg";
-
-const getData = async (key) => {
-    try {
-        const savedUser = await AsyncStorage.getItem(key);
-        return JSON.parse(savedUser);
-    } catch (error) {
-        console.log(error);
-    }
-};
 
 export default function Header({
     text,
@@ -18,7 +9,6 @@ export default function Header({
     setStackOfPages,
     setCurrentPage,
 }) {
-    
     const profileIcon = `
     <svg width="34px" height="39px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="6" r="4" stroke="white" stroke-width="1.5"/>
@@ -29,12 +19,7 @@ export default function Header({
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: 50,
-                    height: 50,
-                }}
+                style={styles.icon}
                 onPress={() => {
                     if (stackOfPages.length !== 1) {
                         stackOfPages.pop();
@@ -45,8 +30,19 @@ export default function Header({
             >
                 <SvgXml xml={changableIcon} />
             </TouchableOpacity>
+
             <Text style={styles.text}>{text}</Text>
-            <SvgXml xml={profileIcon} />
+
+            <TouchableOpacity
+                style={styles.icon}
+                onPress={() => {
+                    setCurrentPage("Settings");
+                    stackOfPages.push("Settings");
+                    setStackOfPages(stackOfPages);
+                }}
+            >
+                <SvgXml xml={profileIcon} />
+            </TouchableOpacity>
         </View>
     );
 }
@@ -68,5 +64,12 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#E8DED4",
         opacity: 0.95,
+    },
+
+    icon: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: 50,
+        height: 50,
     },
 });
