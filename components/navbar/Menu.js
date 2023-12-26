@@ -11,7 +11,7 @@ import Settings from "./Settings";
 import getData from "../common/getData";
 import axios from "axios";
 
-export default function Menu({ isOpen, setisOpen }) {
+export default function Menu({ isOpen, setisOpen, setisLogin }) {
     const manIcon = `
     <svg width="21" height="30" viewBox="0 0 18 27" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M7.14984 19.6856L5.17908 17.0209L4.10611 20.5809C3.96013 20.7727 3.14263 21.9281 1.04048 25.0149C0.760196 26.7373 2.00396 26.6137 2.66088 26.3365L3.40539 25.6331C3.83604 25.1072 4.83748 23.8552 5.39805 23.0537C5.95862 22.2522 6.41993 21.5117 6.58051 21.2417L7.14984 19.6856Z" fill="#E8DED4" stroke="#535352" stroke-linecap="round" stroke-linejoin="round"/>
@@ -161,6 +161,7 @@ export default function Menu({ isOpen, setisOpen }) {
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
+                    setisLogin={setisLogin}
                 />
             ) : null}
             <ExitButton
