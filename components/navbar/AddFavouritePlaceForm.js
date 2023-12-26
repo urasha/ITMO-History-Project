@@ -42,8 +42,8 @@ export default function AddFavouritePlaceForm({
                 name: data.name,
                 description: data.description,
                 address: data.address,
-                // picture: ...,
-                // users_permissions_user: ...,
+                picture: null,
+                users_permissions_user: [2]
             })
             .then((response) => {
                 console.log(response.data);

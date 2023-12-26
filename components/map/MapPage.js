@@ -5,6 +5,7 @@ import SelectBox from 'react-native-multi-selectbox';
 import { SafeAreaView } from "react-native";
 import WebView from "react-native-webview";
 import * as Location from 'expo-location';
+import SmallCardInfoMap from "./SmallCardInfoMap";
 
 export default function MapPage({ isOpen }) {
 
@@ -140,6 +141,7 @@ export default function MapPage({ isOpen }) {
                 onMessage={onMessage}
                 ref={webviewRef}
             />
+            <SmallCardInfoMap></SmallCardInfoMap>
         </SafeAreaView>
     );
 }
