@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#333",
         opacity: 0.95,
-        marginBottom: 10,
+        marginBottom: 12.5,
         fontWeight: "500"
     },
 });

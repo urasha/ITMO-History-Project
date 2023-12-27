@@ -1,13 +1,27 @@
 import { React, useEffect, useState, useRef } from "react";
 import { useAssets } from "expo-asset";
 import { readAsStringAsync } from "expo-file-system";
-import SelectBox from 'react-native-multi-selectbox';
-import { SafeAreaView } from "react-native";
+import { Animated, View } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import WebView from "react-native-webview";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import SmallCardInfoMap from "./SmallCardInfoMap";
+import FullCardInfoMap from "./FullCardInfoMap";
 
 export default function MapPage({ isOpen }) {
+    const [isCardOpen, setisCardOpen] = useState(false);
+    const [isFullCard, setisFullCard] = useState(false);
+
+    // animation for opening card
+    const fadeAnimation = useRef(new Animated.Value(0)).current;
+
+    const fadeIn = () => {
+        Animated.timing(fadeAnimation, {
+            toValue: 0.965,
+            duration: 100,
+            useNativeDriver: true,
+        }).start();
+    };
 
     //HTML LOAD
     const [MapPageHTML, MapPageHTMLLoadingError] = useAssets(
@@ -21,8 +35,6 @@ export default function MapPage({ isOpen }) {
             setHTML(data);
         });
     }
-
-
 
     //DEBUG
     const debugging = `
@@ -40,17 +52,16 @@ export default function MapPage({ isOpen }) {
         let dataPayload;
         try {
             dataPayload = JSON.parse(payload.nativeEvent.data);
-        } catch (e) { }
+        } catch (e) {}
 
         if (dataPayload) {
-            if (dataPayload.type === 'Console') {
+            if (dataPayload.type === "Console") {
                 console.info(`[Console] ${JSON.stringify(dataPayload.data)}`);
             } else {
-                console.log(dataPayload)
+                console.log(dataPayload);
             }
         }
     };
-
 
     //LOCATION
     const [location, setLocation] = useState(null);
@@ -60,44 +71,51 @@ export default function MapPage({ isOpen }) {
 
     useEffect(() => {
         (async () => {
-            const { status } = await Location.requestForegroundPermissionsAsync()
-            if (status !== 'granted') {
-                console.log('Permission to access location was denied')
+            const { status } =
+                await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") {
+                console.log("Permission to access location was denied");
             } else {
-                const locationSubscription = await Location.watchPositionAsync({
-                    accuracy: Location.Accuracy.BestForNavigation,
-                    timeInterval: 500,
-                    distanceInterval: 0
-                }, (location) => {
-                    setLocation(location);
-                    //console.log('New location update: ' + location.coords.latitude + ', ' + location.coords.longitude);
-                    if (webviewRef.current) {
-                        webviewRef.current.postMessage(["location", location.coords.latitude, location.coords.longitude]);
+                const locationSubscription = await Location.watchPositionAsync(
+                    {
+                        accuracy: Location.Accuracy.BestForNavigation,
+                        timeInterval: 500,
+                        distanceInterval: 0,
+                    },
+                    (location) => {
+                        setLocation(location);
+                        //console.log('New location update: ' + location.coords.latitude + ', ' + location.coords.longitude);
+                        if (webviewRef.current) {
+                            webviewRef.current.postMessage([
+                                "location",
+                                location.coords.latitude,
+                                location.coords.longitude,
+                            ]);
+                        }
                     }
-                })
-            } return () => locationSubscription.remove()
-        })()
+                );
+            }
+            return () => locationSubscription.remove();
+        })();
     }, []);
-
-
 
     //PICKER
     const pickerData = [
         {
-            item: 'КронваЛомо',
-            id: '1',
+            item: "КронваЛомо",
+            id: "1",
         },
         {
-            item: 'БиржаГрива',
-            id: '2',
+            item: "БиржаГрива",
+            id: "2",
         },
         {
-            item: 'item3',
-            id: '3',
+            item: "item3",
+            id: "3",
         },
     ];
 
-    const [selectedRoute, setSelectedRoute] = useState({})
+    const [selectedRoute, setSelectedRoute] = useState({});
 
     function onChange() {
         // return (val) => setSelectedRoute(val)
@@ -105,9 +123,9 @@ export default function MapPage({ isOpen }) {
             setSelectedRoute(val);
 
             if (webviewRef.current) {
-                webviewRef.current.postMessage(['route', val.id]);
+                webviewRef.current.postMessage(["route", val.id]);
             }
-        }
+        };
     }
 
     // with SelectBox
@@ -133,7 +151,14 @@ export default function MapPage({ isOpen }) {
 
     // without SelectBox
     return (
-        <SafeAreaView style={{ flex: 1, opacity: isOpen ? 0.1 : 1, backgroundColor: "white" }} pointerEvents={ isOpen ? "none" : "auto"}>
+        <View
+            style={{
+                flex: 1,
+                opacity: isOpen ? 0.1 : 1,
+                backgroundColor: "white",
+            }}
+            pointerEvents={isOpen ? "none" : "auto"}
+        >
             <WebView
                 source={{ html }}
                 geolocationEnabled={true}
@@ -141,7 +166,26 @@ export default function MapPage({ isOpen }) {
                 onMessage={onMessage}
                 ref={webviewRef}
             />
-            <SmallCardInfoMap></SmallCardInfoMap>
-        </SafeAreaView>
+            <Text
+                style={{ color: "black", fontSize: 24, position: "absolute" }}
+                onPress={() => {
+                    fadeIn();
+                    setisCardOpen(true);
+                }}
+            >
+                OPEN CARD
+            </Text>
+            {isFullCard ? (
+                <FullCardInfoMap setisFullCard={setisFullCard} />
+            ) : (
+                <SmallCardInfoMap
+                    name="some text"
+                    cardAnimation={fadeAnimation}
+                    isCardOpen={isCardOpen}
+                    setisCardOpen={setisCardOpen}
+                    setisFullCard={setisFullCard}
+                />
+            )}
+        </View>
     );
 }
