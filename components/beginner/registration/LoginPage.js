@@ -19,7 +19,7 @@ export default function LoginPage({ title, setisLogin, setIsRegistrationOpen }) 
         const _email = email;
         const _password = password;
 
-        const url = "https://hist-museum.onrender.com/api/auth/local";
+        const url = "http://89.104.68.107:1337/api/auth/local";
 
         axios
             .post(url, {

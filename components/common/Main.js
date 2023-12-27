@@ -6,7 +6,7 @@ import IntroPages from "../beginner/IntroPages";
 
 export default function Main() {
     const [isOpen, setisOpen] = useState(false);
-    const [isLogin, setisLogin] = useState(true);
+    const [isLogin, setisLogin] = useState(false);
 
     return (
         <>

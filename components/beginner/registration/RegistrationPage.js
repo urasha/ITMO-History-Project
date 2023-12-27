@@ -19,7 +19,7 @@ export default function RegistrationPage({ title, isRegistrationOpen, setIsRegis
             return;
         }
 
-        const url = "https://hist-museum.onrender.com/api/auth/local/register";
+        const url = "http://89.104.68.107:1337/api/auth/local/register";
 
         axios
             .post(url, {
