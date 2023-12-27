@@ -40,7 +40,7 @@ export default function SmallCardInfoMap({
             }}
             pointerEvents={isCardOpen ? "auto" : "none"}
         >
-            {console.log(isCardOpen)}
+            {/* {console.log(isCardOpen)} */}
             <TouchableOpacity
                 onPress={() => {
                     fadeOut();

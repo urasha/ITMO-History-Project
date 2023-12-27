@@ -48,6 +48,8 @@ export default function MapPage({ isOpen }) {
         };
     `;
 
+    // mapFinishedLoading = false;
+
     const onMessage = (payload) => {
         let dataPayload;
         try {
@@ -56,6 +58,12 @@ export default function MapPage({ isOpen }) {
 
         if (dataPayload) {
             if (dataPayload.type === "Console") {
+                if (dataPayload.data.log == "map ready") {
+                    // mapFinishedLoading = true;
+                    // console.log("finished!");
+                    fetchRoutes();
+                }
+
                 console.info(`[Console] ${JSON.stringify(dataPayload.data)}`);
             } else {
                 console.log(dataPayload);
@@ -148,6 +156,34 @@ export default function MapPage({ isOpen }) {
     //         />
     //     </SafeAreaView>
     // );
+
+
+    //FETCH ROUTES
+    function fetchRoutes() {
+        let chosenRouteId = 1;
+        fetch("http://89.104.68.107:1337/api/routes/" + chosenRouteId + "?populate=*", {
+            method: 'GET',
+            headers: {
+                'Authorization' : 'Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f'
+            }
+        }).then((response) => response.json()).then((responseData) => {
+            // console.log("smth");
+            var places = [];
+            var placesJSON = responseData.data.attributes.places.data;
+            for (let i = 0; i < placesJSON.length; i++) {
+                var latitude = placesJSON[i].attributes.latitude;
+                var longitude = placesJSON[i].attributes.longitude;
+                places.push([latitude, longitude]);
+            }
+            // console.log("PLACES!!!!!!!!!!!!!!!!!!!!!!!!!");
+            // console.log(places);
+
+            if (webviewRef.current) {
+                webviewRef.current.postMessage(["route", places]);
+            }
+        });
+    }
+
 
     // without SelectBox
     return (

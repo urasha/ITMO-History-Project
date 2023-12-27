@@ -4,6 +4,8 @@
         ymaps.ready(init);
 
         function init() {
+            //DONT REMOVE!!
+            console.log('map ready');
             var myMap = new ymaps.Map('map', {
                 center: [60.01, 30.38],
                 zoom: 12,
@@ -38,14 +40,15 @@
                 //console.log(message.data);
                 
                 if (message.data[0] == 'route') {
-                    switch (message.data[1]) {
-                        case '1':
-                            routePoints = ["Санкт-Петербург, Кронверкский проспект 49", "Санкт-Петербург, Ломоносова 9"];
-                            break;
-                        case '2':
-                            routePoints = ["Санкт-Петербург, Биржевая линия 14", "Санкт-Петербург, Гривцова 14-16"];
-                            break;
-                    }
+                    // switch (message.data[1]) {
+                    //     case '1':
+                    //         routePoints = ["Санкт-Петербург, Кронверкский проспект 49", "Санкт-Петербург, Ломоносова 9"];
+                    //         break;
+                    //     case '2':
+                    //         routePoints = ["Санкт-Петербург, Биржевая линия 14", "Санкт-Петербург, Гривцова 14-16"];
+                    //         break;
+                    // }
+                    routePoints = message.data[1];
 
                     multiRoute.model.setReferencePoints(routePoints);
                 }
