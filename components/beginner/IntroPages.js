@@ -8,22 +8,24 @@ import LoginPage from "./registration/LoginPage";
 import AbilitiesPage from "../beginner/abilities/AbilitiesPage";
 import GreetingPage from "../beginner/greetingPage/GreetingPage";
 import { useEffect, useRef, useState } from "react";
+import RegistrationPage from "./registration/RegistrationPage";
 
 const window = Dimensions.get("window");
 
-export default function IntroPages() {
-
+export default function IntroPages({ setisLogin }) {
+    const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+    
     const carouselRef = useRef(null);
 
     function nextSlide() {
         carouselRef.current.next();
     }
 
-    // We need only first two
     const pages = [
         <GreetingPage nextSlide={nextSlide} />,
         <AbilitiesPage nextSlide={nextSlide} title="Возможность" />,
-        <LoginPage title="Невская застава" />,
+        <LoginPage title="Невская застава" setisLogin={setisLogin} setIsRegistrationOpen={setIsRegistrationOpen} />,
+        // <RegistrationPage title="Регистрация" />
     ];
 
     return (
@@ -38,6 +40,7 @@ export default function IntroPages() {
                 scrollAnimationDuration={500}
                 renderItem={({ index }) => pages[index]}
             />
+            <RegistrationPage isRegistrationOpen={isRegistrationOpen} setIsRegistrationOpen={setIsRegistrationOpen} title="Регистрация"></RegistrationPage>
             <StatusBar style="auto" />
         </View>
     );
