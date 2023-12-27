@@ -79,7 +79,7 @@ export default function Settings({ setisLogin }) {
                 <Text
                     style={[
                         styles.label,
-                        { marginLeft: 5, color: "#ed153a", fontSize: 16 },
+                        { marginLeft: 5, color: "#ed153a", fontSize: 16, marginTop: 35 },
                     ]}
                 >
                     Выйти из аккаунта
@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 15,
         color: "white",
-        height: 52,
+        height: "15%",
         justifyContent: "center",
-        width: "48%",
+        width: "39%",
         backgroundColor: "#ec5990",
         borderRadius: 4,
     },
