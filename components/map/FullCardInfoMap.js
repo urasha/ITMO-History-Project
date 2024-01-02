@@ -1,5 +1,14 @@
 import { useRef } from "react";
-import { Text, TouchableOpacity, View, Animated } from "react-native";
+import {
+    Text,
+    TouchableOpacity,
+    View,
+    Animated,
+    Image,
+    ScrollView,
+    FlatList,
+    Dimensions,
+} from "react-native";
 import { SvgXml } from "react-native-svg";
 
 export default function FullCardInfoMap({ setisFullCard }) {
@@ -42,68 +51,105 @@ export default function FullCardInfoMap({ setisFullCard }) {
             >
                 <SvgXml xml={arrowDownImage} />
             </TouchableOpacity>
-            <Text
-                style={{
-                    fontSize: 28,
-                    textAlign: "center",
-                    fontWeight: 700,
-                    marginTop: "5%",
-                    marginBottom: "6%",
-                }}
-            >
-                Невская застава {/* Название из БД */}
-            </Text>
 
-            <View style={{ marginBottom: "10%", marginLeft: "6%" }}>
-                <View style={{marginBottom: "6.5%"}}>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                        }}
-                    >
-                        <SvgXml xml={addressImage} />
-                        <Text style={{ fontSize: 17, fontWeight: 500, left: "38%" }}>
-                            Адрес {/* адрес из БД */}
-                        </Text>
-                    </View>
+            <View style={{ flex: 0.99 }}>
+                <ScrollView>
                     <Text
                         style={{
-                            marginLeft: "10.8%",
-                            marginTop: "2%",
-                            fontSize: 15,
+                            fontSize: 28,
+                            textAlign: "center",
+                            fontWeight: 700,
+                            marginTop: "5%",
+                            marginBottom: "6%",
                         }}
                     >
-                        ул. Салова, д. 61
+                        Невская застава {/* Название из БД */}
                     </Text>
-                </View>
 
-                <View>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                        }}
-                    >
-                        <SvgXml xml={descriptionImage} />
-                        <Text style={{ fontSize: 17, fontWeight: 500, left: "38%" }}>
-                            Описание {/* описание из БД */}
-                        </Text>
+                    <View style={{ marginBottom: "10%", marginLeft: "6%" }}>
+                        <View style={{ marginBottom: "6.5%" }}>
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <SvgXml xml={addressImage} />
+                                <Text
+                                    style={{
+                                        fontSize: 17,
+                                        fontWeight: 500,
+                                        left: "38%",
+                                    }}
+                                >
+                                    Адрес {/* адрес из БД */}
+                                </Text>
+                            </View>
+                            <Text
+                                style={{
+                                    marginLeft: "10.8%",
+                                    marginTop: "2%",
+                                    fontSize: 15,
+                                }}
+                            >
+                                ул. Салова, д. 61
+                            </Text>
+                        </View>
+
+                        <View>
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <SvgXml xml={descriptionImage} />
+                                <Text
+                                    style={{
+                                        fontSize: 17,
+                                        fontWeight: 500,
+                                        left: "38%",
+                                    }}
+                                >
+                                    Описание {/* описание из БД */}
+                                </Text>
+                            </View>
+                            <Text
+                                style={{
+                                    marginLeft: "10.8%",
+                                    marginTop: "2%",
+                                    fontSize: 15,
+                                    maxWidth: "80%",
+                                    textAlign: "justify",
+                                }}
+                            >
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed purus mi, congue et quam ac, bibendum fermentum purus. Fusce laoreet tellus sed orci gravida cursus. Fusce faucibus, purus euismod rutrum scelerisque, turpis nibh mollis erat, eu ultricies quam elit nec orci. Nullam pellentesque convallis fringilla. Suspendisse ullamcorper felis et nibh accumsan laoreet. Vivamus nec libero lectus. Curabitur egestas gravida libero, sit amet volutpat magna pretium at. Fusce ac elementum sem. Morbi sed posuere felis. Etiam accumsan ornare nibh, sed venenatis eros euismod in. Ut lorem nisl, auctor non condimentum vitae, scelerisque in elit. Duis volutpat eget lectus ac consequat. Donec semper ipsum et tellus congue, eu ultrices arcu consequat. 
+                            </Text>
+                        </View>
+
+                        <View
+                            style={{
+                                height: 300,
+                                marginLeft: "-6.75%",
+                                top: 25,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Image
+                                source={require("../../assets/beginner/a.jpg")} // картинка из БД
+                                resizeMode="cover"
+                                style={{
+                                    borderColor: "#4682b0",
+                                    borderWidth: 2,
+                                    borderRadius: 50,
+                                    width: "90%",
+                                    height: "100%",
+                                }}
+                            />
+                        </View>
                     </View>
-                    <Text
-                        style={{
-                            marginLeft: "10.8%",
-                            marginTop: "2%",
-                            fontSize: 15,
-                            maxWidth: "80%",
-                            textAlign: "justify"
-                        }}
-                    >
-                        Тут интересное большое описание нашего объекта, которое все прочитают, я уверен в этом! Урааа!
-                    </Text>
-                </View>
-
-                {/* Картинку для объекта еще мб? */}
+                </ScrollView>
             </View>
         </View>
     );
