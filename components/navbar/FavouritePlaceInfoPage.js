@@ -16,7 +16,7 @@ export default function FavouritePlaceInfoPage({
             <Text style={styles.header}>Описание</Text>
             <Text style={styles.text}>{favouritePlaceInfo.description}</Text>
             <Text style={styles.header}>Адрес</Text>
-            <Text style={styles.text}>{favouritePlaceInfo.address}</Text>
+            <Text style={styles.text}>{favouritePlaceInfo.adress}</Text>
         </View>
     )
 }
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#E8DED4",
         opacity: 0.95,
-        marginBottom: 18
+        marginBottom: 13
     },
 
     text: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#333",
         opacity: 0.95,
-        marginBottom: 12.5,
+        marginBottom: 32,
         fontWeight: "500"
     },
 });

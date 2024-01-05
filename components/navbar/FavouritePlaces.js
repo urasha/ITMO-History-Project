@@ -25,6 +25,7 @@ export default function FavouritePlaces({
 
     return (
         <View style={[styles.container]}>
+            {console.log(places)}
             {places.length === 0 ? (
                 <View style={styles.noPlacesContainer}>
                     <Text style={styles.noPlacesText}>
@@ -32,7 +33,7 @@ export default function FavouritePlaces({
                     </Text>
                 </View>
             ) : (
-                <ScrollView style={{height: places.length * 55, flexGrow: 0, maxHeight: heightOfScrollView}}>
+                <ScrollView style={{height: places.length * 63, flexGrow: 0, maxHeight: heightOfScrollView}}>
                     {places.map((info, id) => {
                         return (
                             <View
@@ -46,7 +47,7 @@ export default function FavouritePlaces({
                                         alignItems: "center",
                                     }}
                                     onPress={() => {
-                                        setFavouritePlaceInfo(favouritePlacesData[id]);
+                                        setFavouritePlaceInfo(places[id].attributes);
                                         stackOfPages.push(
                                             "FavouritePlaceInfoPage"
                                         );
@@ -57,7 +58,7 @@ export default function FavouritePlaces({
                                     }}
                                 >
                                     <Text style={styles.favouritePlaceText}>
-                                        {info["name"]}
+                                        {info.attributes["name"]}
                                     </Text>
                                     <SvgXml
                                         xml={arrowIcon}
@@ -70,7 +71,7 @@ export default function FavouritePlaces({
                 </ScrollView>
             )}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={styles.addFavouriteContainer}
                 onPress={() => {
                     stackOfPages.push("AddFavouritePlaceForm");
@@ -79,7 +80,7 @@ export default function FavouritePlaces({
                 }}
             >
                 <Text style={styles.addFavouriteText}>Добавить место</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 }
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     },
 
     favouritePlaceContainer: {
-        height: 55,
+        height: 63,
         justifyContent: "center",
         paddingLeft: "4.5%",
         borderBottomWidth: 2,
