@@ -13,6 +13,7 @@ import { load } from '@2gis/mapgl';
 export default function MapPage({ isOpen }) {
     const [isCardOpen, setisCardOpen] = useState(false);
     const [isFullCard, setisFullCard] = useState(false);
+    const [currentPlaceData, setcurrentPlaceData] = useState({});
 
     // animation for opening card
     const fadeAnimation = useRef(new Animated.Value(0)).current;
@@ -156,15 +157,17 @@ export default function MapPage({ isOpen }) {
     }
 
     function fetchPointInfo(id) {
-        fetch("http://89.104.68.107:1337/api/places?filters[id][$eq]=" + id, {
+        setcurrentPlaceData({});
+
+        fetch("http://89.104.68.107:1337/api/places?filters[id][$eq]=" + id + "&populate=*", {
             method: 'GET',
             headers: {
                 'Authorization' : 'Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f'
             }
         }).then((response) => response.json()).then((responseData) => {
             data = responseData.data[0].attributes;
+            setcurrentPlaceData(data);
             console.log(data);
-            ////////////////////////////////////////////////////////////////////////POINT INFO DATA
         });
     }
 
@@ -184,7 +187,7 @@ export default function MapPage({ isOpen }) {
                 onMessage={onMessage}
                 ref={webviewRef}
             />
-            <Text
+            {/* <Text
                 style={{ color: "black", fontSize: 24, position: "absolute" }}
                 onPress={() => {
                     fadeIn();
@@ -192,12 +195,12 @@ export default function MapPage({ isOpen }) {
                 }}
             >
                 OPEN CARD {/* для тестов */}
-            </Text>
+            {/* </Text> */}
             {isFullCard ? (
-                <FullCardInfoMap setisFullCard={setisFullCard} />
+                <FullCardInfoMap setisFullCard={setisFullCard} placeData={currentPlaceData} />
             ) : (
                 <SmallCardInfoMap
-                    name="some text"
+                    name={currentPlaceData["name"]}
                     cardAnimation={fadeAnimation}
                     isCardOpen={isCardOpen}
                     setisCardOpen={setisCardOpen}
