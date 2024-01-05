@@ -7,6 +7,8 @@ import WebView from "react-native-webview";
 import * as Location from "expo-location";
 import SmallCardInfoMap from "./SmallCardInfoMap";
 import FullCardInfoMap from "./FullCardInfoMap";
+import { load } from '@2gis/mapgl';
+
 
 export default function MapPage({ isOpen }) {
     const [isCardOpen, setisCardOpen] = useState(false);
@@ -48,30 +50,32 @@ export default function MapPage({ isOpen }) {
         };
     `;
 
-    // mapFinishedLoading = false;
-
     const onMessage = (payload) => {
-        let dataPayload;
+        // console.log(payload.nativeEvent.data);
+
         try {
-            dataPayload = JSON.parse(payload.nativeEvent.data);
-        } catch (e) {}
-
-        if (dataPayload) {
-            if (dataPayload.type === "Console") {
-                if (dataPayload.data.log == "map ready") {
-                    // mapFinishedLoading = true;
-                    // console.log("finished!");
-                    fetchRoutes();
-                }
-
-                console.info(`[Console] ${JSON.stringify(dataPayload.data)}`);
-            } else {
-                console.log(dataPayload);
+            if (payload.nativeEvent.data == "map ready") {
+                let chosenRouteId = 1;
+                fetchRoutes(chosenRouteId);
             }
-        }
+            else if (payload.nativeEvent.data.split(',')[0] == 'clicked') {
+                data = payload.nativeEvent.data.split(',');
+                coords = [data[1], data[2]];
+                
+                places = [];
+                for (var i = 3; i < data.length; i+=3) {
+                    places.push([data[i], data[i+1], data[i+2]]);
+                }
+                id = findSim(places, coords);
+
+                fetchPointInfo(id);
+                fadeIn();
+                setisCardOpen(true);
+            }
+        } catch (e) { console.error (e); }
     };
 
-    //LOCATION
+    // //LOCATION
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
@@ -91,14 +95,16 @@ export default function MapPage({ isOpen }) {
                         distanceInterval: 0,
                     },
                     (location) => {
-                        setLocation(location);
-                        //console.log('New location update: ' + location.coords.latitude + ', ' + location.coords.longitude);
-                        if (webviewRef.current) {
-                            webviewRef.current.postMessage([
-                                "location",
-                                location.coords.latitude,
-                                location.coords.longitude,
-                            ]);
+                        if (setLocation) {
+                            setLocation(location);
+                            //console.log('New location update: ' + location.coords.latitude + ', ' + location.coords.longitude);
+                            if (webviewRef.current) {
+                                webviewRef.current.postMessage([
+                                    "location",
+                                    location.coords.latitude,
+                                    location.coords.longitude,
+                                ]);
+                            }
                         }
                     }
                 );
@@ -107,91 +113,61 @@ export default function MapPage({ isOpen }) {
         })();
     }, []);
 
-    //PICKER
-    const pickerData = [
-        {
-            item: "КронваЛомо",
-            id: "1",
-        },
-        {
-            item: "БиржаГрива",
-            id: "2",
-        },
-        {
-            item: "item3",
-            id: "3",
-        },
-    ];
-
-    const [selectedRoute, setSelectedRoute] = useState({});
-
-    function onChange() {
-        // return (val) => setSelectedRoute(val)
-        return (val) => {
-            setSelectedRoute(val);
-
-            if (webviewRef.current) {
-                webviewRef.current.postMessage(["route", val.id]);
-            }
-        };
-    }
-
-    // with SelectBox
-    // return (
-    //     <SafeAreaView style={{flex: 1}}>
-    //         <SelectBox
-    //             label="Выбор тестового маршрута"
-    //             options={pickerData}
-    //             value={selectedRoute}
-    //             onChange={onChange()}
-    //             hideInputFilter={true}
-    //         />
-    //         <WebView
-    //             source={{html}}
-    //             style={{flex: 1}}
-    //             geolocationEnabled={true}
-    //             injectedJavaScript={debugging}
-    //             onMessage={onMessage}
-    //             ref={webviewRef}
-    //         />
-    //     </SafeAreaView>
-    // );
 
     //FETCH ROUTES
-    function fetchRoutes() {
-        let chosenRouteId = 1;
-        fetch(
-            "http://89.104.68.107:1337/api/routes/" +
-                chosenRouteId +
-                "?populate=*",
-            {
-                method: "GET",
-                headers: {
-                    Authorization:
-                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
-                },
+    function fetchRoutes(chosenRouteId) {
+        fetch("http://89.104.68.107:1337/api/routes/" + chosenRouteId + "?populate=*", {
+            method: 'GET',
+            headers: {
+                'Authorization' : 'Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f'
             }
-        )
-            .then((response) => response.json())
-            .then((responseData) => {
-                // console.log("smth");
-                var places = [];
-                var placesJSON = responseData.data.attributes.places.data;
-                for (let i = 0; i < placesJSON.length; i++) {
-                    var latitude = placesJSON[i].attributes.latitude;
-                    var longitude = placesJSON[i].attributes.longitude;
-                    places.push([latitude, longitude]);
-                }
-                // console.log("PLACES!!!!!!!!!!!!!!!!!!!!!!!!!");
-                // console.log(places);
+        }).then((response) => response.json()).then((responseData) => {
+            var places = [];
+            var placesJSON = responseData.data.attributes.places.data;
+            for (let i = 0; i < placesJSON.length; i++) {
+                var latitude = placesJSON[i].attributes.latitude;
+                var longitude = placesJSON[i].attributes.longitude;
+                var id = placesJSON[i].id;
+                places.push([longitude, latitude, id]);
+            }
 
-                if (webviewRef.current) {
-                    webviewRef.current.postMessage(["route", places]);
-                }
-            });
+            if (webviewRef.current) {
+                webviewRef.current.postMessage(["route", places]);
+            }
+        });
     }
 
-    // without SelectBox
+
+    //FETCH POINT INFO
+    function findSim(places, coord) {
+        minE = 10000;
+        placeInd = -1;
+        for (var i = 0; i < places.length; i++) {
+            var latE = Math.abs(places[i][0] - coord[0]);
+            var longE = Math.abs(places[i][1] - coord[1]);
+            if (latE < 0.0005 && longE < 0.0005) {
+                if (latE + longE < minE) {
+                    minE = latE + longE;
+                    placeInd = i;
+                }
+            }
+        }
+        return places[placeInd][2];
+    }
+
+    function fetchPointInfo(id) {
+        fetch("http://89.104.68.107:1337/api/places?filters[id][$eq]=" + id, {
+            method: 'GET',
+            headers: {
+                'Authorization' : 'Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f'
+            }
+        }).then((response) => response.json()).then((responseData) => {
+            data = responseData.data[0].attributes;
+            console.log(data);
+            ////////////////////////////////////////////////////////////////////////POINT INFO DATA
+        });
+    }
+
     return (
         <View
             style={{
@@ -209,14 +185,7 @@ export default function MapPage({ isOpen }) {
                 ref={webviewRef}
             />
             <Text
-                style={{
-                    color: "black",
-                    fontSize: 24,
-                    position: "absolute",
-                    backgroundColor: "#555",
-                    color: "white",
-                    opacity: 0.85
-                }}
+                style={{ color: "black", fontSize: 24, position: "absolute" }}
                 onPress={() => {
                     fadeIn();
                     setisCardOpen(true);
@@ -228,7 +197,7 @@ export default function MapPage({ isOpen }) {
                 <FullCardInfoMap setisFullCard={setisFullCard} />
             ) : (
                 <SmallCardInfoMap
-                    name="Невская застава"
+                    name="some text"
                     cardAnimation={fadeAnimation}
                     isCardOpen={isCardOpen}
                     setisCardOpen={setisCardOpen}
