@@ -166,6 +166,7 @@ export default function MapPage({ isOpen }) {
             }
         }).then((response) => response.json()).then((responseData) => {
             data = responseData.data[0].attributes;
+            data["id"] = id;
             setcurrentPlaceData(data);
             console.log(data);
         });
@@ -207,6 +208,23 @@ export default function MapPage({ isOpen }) {
                     setisFullCard={setisFullCard}
                 />
             )}
+            <Text
+                style={{
+                    color: "black",
+                    fontSize: 24,
+                    position: "absolute",
+                    backgroundColor: "#555",
+                    color: "white",
+                    opacity: 0.85
+                }}
+                onPress={() => {
+                    fadeIn();
+                    setisCardOpen(true);
+                    fetchPointInfo(6);
+                }}
+            >
+                OPEN CARD
+            </Text>
         </View>
     );
 }
