@@ -191,7 +191,7 @@ export default function MapPage({ isOpen }) {
                     setisCardOpen(true);
                 }}
             >
-                OPEN CARD
+                OPEN CARD {/* для тестов */}
             </Text>
             {isFullCard ? (
                 <FullCardInfoMap setisFullCard={setisFullCard} />
