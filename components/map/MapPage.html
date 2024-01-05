@@ -1,6 +1,17 @@
 <head>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3f01461a-9b71-4ce2-af95-b3c5012a90e3" type="text/javascript"></script>
-    <script type="text/javascript">
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+
+
+    <!-- <script type="text/javascript">
         ymaps.ready(init);
 
         function init() {
@@ -57,8 +68,63 @@
                 }
             });
         }
-    </script>
+    </script> -->
 </head>
 <body>
-    <div id="map" style="width: 100vw; height: 100vh"></div>
+    <!-- <div id="map" style="width: 100vw; height: 100vh"></div> -->
+    <div id="container"></div>
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <script src="https://unpkg.com/@2gis/mapgl-directions@^2/dist/directions.js"></script>
+
+    <script>
+        const map = new mapgl.Map('container', {
+            center: [30.337168797796412, 59.9342321280682],
+            zoom: 16,
+            key: '6a2ceaf5-a128-4d13-a15b-122661449c4d',
+            style: 'c080bb6a-8134-4993-93a1-5b4d8c36a59b'
+        });
+        window.ReactNativeWebView.postMessage("map ready");
+        
+        // window.ReactNativeWebView.postMessage(map.getStyleState().);
+        
+
+        const directions = new mapgl.Directions(map, {
+            directionsApiKey: '6a2ceaf5-a128-4d13-a15b-122661449c4d',
+        });
+
+
+        const personGeo = new mapgl.Marker(map, {
+            coordinates: [0, 0],
+            icon: 'https://docs.2gis.com/img/mapgl/marker.svg'
+        });
+
+        var routePoints;
+
+        window.addEventListener("message", message => {
+            //console.log("GOT ");
+            //console.log(message.data);
+            
+            if (message.data[0] == 'route') {
+                routePoints = message.data[1];
+                
+                directions.pedestrianRoute({
+                    points: routePoints
+                });
+                
+                routePoints.forEach((coord) => {
+                    const marker = new mapgl.Marker(map, {
+                        coordinates: coord,
+                        zIndex: 100
+                    });
+                    marker.on('click', function (e) {
+                        data = ["clicked", e.lngLat, routePoints];
+                        window.ReactNativeWebView.postMessage(data);
+                    });
+                });
+            }
+            else if (message.data[0] === 'location') {
+                personGeo.setCoordinates([message.data[2], message.data[1]]);
+            }
+        });
+    </script>
 </body>
