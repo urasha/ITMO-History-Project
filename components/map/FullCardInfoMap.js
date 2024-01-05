@@ -72,7 +72,7 @@ export default function FullCardInfoMap({ setisFullCard, placeData }) {
     `;
 
     const [sound, setSound] = useState();
-    const [isLiked, setIsLiked] = useState();
+    const [isLiked, setIsLiked] = useState(false);
 
     async function addLikedObject(placeData) {
         const userId = await getData("id");
@@ -153,14 +153,15 @@ export default function FullCardInfoMap({ setisFullCard, placeData }) {
             })
                 .then((response) => response.json())
                 .then((responseData) => {
+                    console.log(responseData);
                     let index;
                     if (
                         responseData.data.some((el, i) => {
                             index = i;
                             return (
-                                parseInt(userId) ===
+                                userId ==
                                     el.attributes.user.data.id &&
-                                placeData.id === el.attributes.place.data.id
+                                placeData.id == el.attributes.place.data.id
                             );
                         })
                     ) {
@@ -199,7 +200,14 @@ export default function FullCardInfoMap({ setisFullCard, placeData }) {
 
             <View style={{ flex: 0.99 }}>
                 <ScrollView>
-                    <View style={{flexDirection: "row", paddingHorizontal: 10, alignItems: "center", justifyContent: "center"}}>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            paddingHorizontal: 10,
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
                         <Text
                             style={{
                                 fontSize: 28,
@@ -233,10 +241,10 @@ export default function FullCardInfoMap({ setisFullCard, placeData }) {
                                             responseData.data.some((el, i) => {
                                                 index = i;
                                                 return (
-                                                    parseInt(userId) ===
+                                                    userId ==
                                                         el.attributes.user.data
                                                             .id &&
-                                                    placeData.id ===
+                                                    placeData.id ==
                                                         el.attributes.place.data
                                                             .id
                                                 );
