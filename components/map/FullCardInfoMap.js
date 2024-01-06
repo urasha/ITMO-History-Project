@@ -159,8 +159,7 @@ export default function FullCardInfoMap({ setisFullCard, placeData }) {
                         responseData.data.some((el, i) => {
                             index = i;
                             return (
-                                userId ==
-                                    el.attributes.user.data.id &&
+                                userId == el.attributes.user.data.id &&
                                 placeData.id == el.attributes.place.data.id
                             );
                         })
@@ -330,73 +329,81 @@ export default function FullCardInfoMap({ setisFullCard, placeData }) {
                                 {placeData["description"]}
                             </Text>
                         </View>
-
-                        <View>
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <SvgXml xml={audioImage} />
-                                <Text
+                        {console.log(placeData.picture)}
+                        {placeData.audio.data != null ? (
+                            <View>
+                                <View
                                     style={{
-                                        fontSize: 17,
-                                        fontWeight: 500,
-                                        left: "38%",
+                                        flexDirection: "row",
+                                        alignItems: "center",
                                     }}
                                 >
-                                    Аудио материалы
-                                </Text>
+                                    <SvgXml xml={audioImage} />
+                                    <Text
+                                        style={{
+                                            fontSize: 17,
+                                            fontWeight: 500,
+                                            left: "38%",
+                                        }}
+                                    >
+                                        Аудио материалы
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        width: "25%",
+                                        marginLeft: "10.75%",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                        onPress={playSound}
+                                        style={{ padding: 2.5 }}
+                                    >
+                                        <SvgXml xml={playImage} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        onPress={stopSound}
+                                        style={{ padding: 2.5 }}
+                                    >
+                                        <SvgXml xml={stopImage} />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
+                        ) : (
+                            <></>
+                        )}
+
+                        {placeData.picture.data != null ? (
                             <View
                                 style={{
-                                    flexDirection: "row",
-                                    width: "25%",
-                                    marginLeft: "10.75%",
-                                    justifyContent: "space-between",
+                                    height: 300,
+                                    marginLeft: "-6.75%",
+                                    top: 25,
+                                    alignItems: "center",
+                                    justifyContent: "center",
                                 }}
                             >
-                                <TouchableOpacity
-                                    onPress={playSound}
-                                    style={{ padding: 2.5 }}
-                                >
-                                    <SvgXml xml={playImage} />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    onPress={stopSound}
-                                    style={{ padding: 2.5 }}
-                                >
-                                    <SvgXml xml={stopImage} />
-                                </TouchableOpacity>
+                                <Image
+                                    source={{
+                                        uri: placeData.picture.data[0]
+                                            .attributes.url,
+                                    }}
+                                    resizeMode="cover"
+                                    style={{
+                                        borderColor: "#000",
+                                        borderWidth: 1,
+                                        borderRadius: 50,
+                                        width: "90%",
+                                        height: "100%",
+                                    }}
+                                />
                             </View>
-                        </View>
-
-                        <View
-                            style={{
-                                height: 300,
-                                marginLeft: "-6.75%",
-                                top: 25,
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <Image
-                                source={{
-                                    uri: placeData.picture.data[0].attributes
-                                        .url,
-                                }}
-                                resizeMode="cover"
-                                style={{
-                                    borderColor: "#4682b0",
-                                    borderWidth: 2,
-                                    borderRadius: 50,
-                                    width: "90%",
-                                    height: "100%",
-                                }}
-                            />
-                        </View>
+                        ) : (
+                            <></>
+                        )}
                     </View>
                 </ScrollView>
             </View>

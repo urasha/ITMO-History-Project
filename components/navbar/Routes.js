@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect } from "react";
 import {
     View,
     StyleSheet,
@@ -6,10 +8,12 @@ import {
     ScrollView,
     useWindowDimensions,
 } from "react-native";
+
 import { SvgXml } from "react-native-svg";
 
 export default function Routes({
     setRouteInfo,
+    setRoutes,
     routes,
     setCurrentPage,
     setStackOfPages,
@@ -22,6 +26,31 @@ export default function Routes({
     </svg>
     `;
 
+    function getDataFromDb() {
+        // get routes
+        axios
+            .get(`http://89.104.68.107:1337/api/routes?populate=*`, {
+                headers: {
+                    Authorization:
+                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                },
+            })
+            .then((response) => {
+                let r = [];
+                response.data.data.forEach((el) => {
+                    r.push(el);
+                });
+                setRoutes(r);
+            })
+            .catch((error) => {
+                console.log("ERROR WITH ROUTES!!!");
+            });
+    }
+
+    useEffect(() => {
+        getDataFromDb();
+    }, []);
+
     return (
         <View style={[styles.container]}>
             <ScrollView
@@ -31,9 +60,9 @@ export default function Routes({
                     maxHeight: heightOfScrollView,
                 }}
             >
-                {routes.map((info, id) => {
+                {routes.map((info, index) => {
                     return (
-                        <View key={id} style={styles.favouritePlaceContainer}>
+                        <View key={routes[index].id} style={styles.favouritePlaceContainer}>
                             <TouchableOpacity
                                 style={{
                                     flexDirection: "row",
@@ -41,9 +70,7 @@ export default function Routes({
                                     alignItems: "center",
                                 }}
                                 onPress={() => {
-                                    setRouteInfo(
-                                        routes[id].attributes
-                                    );
+                                    setRouteInfo(routes[index].attributes);
                                     stackOfPages.push("RouteInfoPage");
                                     setStackOfPages(stackOfPages);
                                     setCurrentPage("RouteInfoPage");
@@ -91,7 +118,7 @@ const styles = StyleSheet.create({
 
     addFavouriteContainer: {
         width: "50%",
-        height: '10%',
+        height: "10%",
         justifyContent: "center",
         paddingLeft: "4%",
     },
