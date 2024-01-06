@@ -1,16 +1,17 @@
 import { React, useEffect, useState, useRef } from "react";
 import { useAssets } from "expo-asset";
 import { readAsStringAsync } from "expo-file-system";
-import { Animated, View } from "react-native";
+import { Animated, Button, View } from "react-native";
 import { SafeAreaView, Text } from "react-native";
 import WebView from "react-native-webview";
 import * as Location from "expo-location";
 import SmallCardInfoMap from "./SmallCardInfoMap";
 import FullCardInfoMap from "./FullCardInfoMap";
-import { load } from '@2gis/mapgl';
+import { load } from "@2gis/mapgl";
+import getData from "../common/getData";
+import EndRouteButton from "../navbar/EndRouteButton";
 
-
-export default function MapPage({ isOpen }) {
+export default function MapPage({ isOpen, setIsRouteStarted, isRouteStarted }) {
     const [isCardOpen, setisCardOpen] = useState(false);
     const [isFullCard, setisFullCard] = useState(false);
     const [currentPlaceData, setcurrentPlaceData] = useState({});
@@ -58,14 +59,13 @@ export default function MapPage({ isOpen }) {
             if (payload.nativeEvent.data == "map ready") {
                 let chosenRouteId = 1;
                 fetchRoutes(chosenRouteId);
-            }
-            else if (payload.nativeEvent.data.split(',')[0] == 'clicked') {
-                data = payload.nativeEvent.data.split(',');
+            } else if (payload.nativeEvent.data.split(",")[0] == "clicked") {
+                data = payload.nativeEvent.data.split(",");
                 coords = [data[1], data[2]];
-                
+
                 places = [];
-                for (var i = 3; i < data.length; i+=3) {
-                    places.push([data[i], data[i+1], data[i+2]]);
+                for (var i = 3; i < data.length; i += 3) {
+                    places.push([data[i], data[i + 1], data[i + 2]]);
                 }
                 id = findSim(places, coords);
 
@@ -73,7 +73,9 @@ export default function MapPage({ isOpen }) {
                 fadeIn();
                 setisCardOpen(true);
             }
-        } catch (e) { console.error (e); }
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     // //LOCATION
@@ -114,30 +116,36 @@ export default function MapPage({ isOpen }) {
         })();
     }, []);
 
-
     //FETCH ROUTES
     function fetchRoutes(chosenRouteId) {
-        fetch("http://89.104.68.107:1337/api/routes/" + chosenRouteId + "?populate=*", {
-            method: 'GET',
-            headers: {
-                'Authorization' : 'Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f'
+        fetch(
+            "http://89.104.68.107:1337/api/routes/" +
+                chosenRouteId +
+                "?populate=*",
+            {
+                method: "GET",
+                headers: {
+                    Authorization:
+                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                },
             }
-        }).then((response) => response.json()).then((responseData) => {
-            var places = [];
-            var placesJSON = responseData.data.attributes.places.data;
-            for (let i = 0; i < placesJSON.length; i++) {
-                var latitude = placesJSON[i].attributes.latitude;
-                var longitude = placesJSON[i].attributes.longitude;
-                var id = placesJSON[i].id;
-                places.push([longitude, latitude, id]);
-            }
+        )
+            .then((response) => response.json())
+            .then((responseData) => {
+                var places = [];
+                var placesJSON = responseData.data.attributes.places.data;
+                for (let i = 0; i < placesJSON.length; i++) {
+                    var latitude = placesJSON[i].attributes.latitude;
+                    var longitude = placesJSON[i].attributes.longitude;
+                    var id = placesJSON[i].id;
+                    places.push([longitude, latitude, id]);
+                }
 
-            if (webviewRef.current) {
-                webviewRef.current.postMessage(["route", places]);
-            }
-        });
+                if (webviewRef.current) {
+                    webviewRef.current.postMessage(["route", places]);
+                }
+            });
     }
-
 
     //FETCH POINT INFO
     function findSim(places, coord) {
@@ -159,17 +167,25 @@ export default function MapPage({ isOpen }) {
     function fetchPointInfo(id) {
         setcurrentPlaceData({});
 
-        fetch("http://89.104.68.107:1337/api/places?filters[id][$eq]=" + id + "&populate=*", {
-            method: 'GET',
-            headers: {
-                'Authorization' : 'Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f'
+        fetch(
+            "http://89.104.68.107:1337/api/places?filters[id][$eq]=" +
+                id +
+                "&populate=*",
+            {
+                method: "GET",
+                headers: {
+                    Authorization:
+                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                },
             }
-        }).then((response) => response.json()).then((responseData) => {
-            data = responseData.data[0].attributes;
-            data["id"] = id;
-            setcurrentPlaceData(data);
-            console.log(data);
-        });
+        )
+            .then((response) => response.json())
+            .then((responseData) => {
+                data = responseData.data[0].attributes;
+                data["id"] = id;
+                setcurrentPlaceData(data);
+                console.log(data);
+            });
     }
 
     return (
@@ -188,17 +204,12 @@ export default function MapPage({ isOpen }) {
                 onMessage={onMessage}
                 ref={webviewRef}
             />
-            {/* <Text
-                style={{ color: "black", fontSize: 24, position: "absolute" }}
-                onPress={() => {
-                    fadeIn();
-                    setisCardOpen(true);
-                }}
-            >
-                OPEN CARD {/* для тестов */}
-            {/* </Text> */}
+            {isRouteStarted ? <EndRouteButton setIsRouteStarted={setIsRouteStarted} /> : null}
             {isFullCard ? (
-                <FullCardInfoMap setisFullCard={setisFullCard} placeData={currentPlaceData} />
+                <FullCardInfoMap
+                    setisFullCard={setisFullCard}
+                    placeData={currentPlaceData}
+                />
             ) : (
                 <SmallCardInfoMap
                     name={currentPlaceData["name"]}
@@ -208,23 +219,6 @@ export default function MapPage({ isOpen }) {
                     setisFullCard={setisFullCard}
                 />
             )}
-            {/* <Text
-                style={{
-                    color: "black",
-                    fontSize: 24,
-                    position: "absolute",
-                    backgroundColor: "#555",
-                    color: "white",
-                    opacity: 0.85
-                }}
-                onPress={() => {
-                    fadeIn();
-                    setisCardOpen(true);
-                    fetchPointInfo(6);
-                }}
-            >
-                OPEN CARD
-            </Text> */}
         </View>
     );
 }
