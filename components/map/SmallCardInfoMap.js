@@ -53,10 +53,11 @@ export default function SmallCardInfoMap({
 
             <Text
                 style={{
-                    fontSize: 28,
+                    fontSize: 25,
                     textAlign: "center",
-                    marginTop: "7%",
+                    marginTop: "2.5%",
                     fontWeight: 700,
+                    width: "115%"
                 }}
             >
                 {name}
@@ -72,7 +73,7 @@ export default function SmallCardInfoMap({
                     style={{
                         fontSize: 19,
                         textAlign: "center",
-                        padding: 15,
+                        padding: 13,
                         color: "#7CADF8",
                     }}
                 >

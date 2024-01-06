@@ -42,7 +42,7 @@ export default function MenuList({
     </defs>
     </svg>
     `;
-
+    
     return (
         <View style={styles.container}>
             <MenuListComponent

@@ -4,6 +4,7 @@ import * as React from "react";
 import axios from "axios";
 import { SvgXml } from "react-native-svg";
 import { TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Settings({ setisLogin }) {
     const {
@@ -74,12 +75,21 @@ export default function Settings({ setisLogin }) {
 
             <TouchableOpacity
                 style={{ flexDirection: "row", alignItems: "center" }}
-                onPress={() => setisLogin(false)}
+                onPress={() => {
+                    setisLogin(false);
+                    AsyncStorage.clear();
+                }}
             >
                 <Text
                     style={[
                         styles.label,
-                        { marginLeft: 5, color: "#ed153a", fontSize: 16, marginTop: 35 },
+                        {
+                            marginLeft: 5,
+                            color: "#ed153a",
+                            fontSize: 16,
+                            marginTop: 35,
+                            fontWeight: 700,
+                        },
                     ]}
                 >
                     Выйти из аккаунта

@@ -10,8 +10,14 @@ import Routes from "./Routes";
 import Settings from "./Settings";
 import getData from "../common/getData";
 import axios from "axios";
+import RouteInfoPage from "./RouteInfoPage";
 
-export default function Menu({ isOpen, setisOpen, setisLogin }) {
+export default function Menu({
+    isOpen,
+    setisOpen,
+    setisLogin,
+    setIsRouteStarted,
+}) {
     const manIcon = `
     <svg width="21" height="30" viewBox="0 0 18 27" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M7.14984 19.6856L5.17908 17.0209L4.10611 20.5809C3.96013 20.7727 3.14263 21.9281 1.04048 25.0149C0.760196 26.7373 2.00396 26.6137 2.66088 26.3365L3.40539 25.6331C3.83604 25.1072 4.83748 23.8552 5.39805 23.0537C5.95862 22.2522 6.41993 21.5117 6.58051 21.2417L7.14984 19.6856Z" fill="#E8DED4" stroke="#535352" stroke-linecap="round" stroke-linejoin="round"/>
@@ -26,19 +32,21 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
     </svg>
     `;
 
-    const [userName, setUserName] = useState("Anonymous"); // from db
+    const [userName, setUserName] = useState("Anonymous");
     const [currentPage, setCurrentPage] = useState("MenuList");
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
 
-    const [favouritePlacesData, setFavouritePlacesData] = useState([]); // from db
-    const [favouritePlaceInfo, setFavouritePlaceInfo] = useState(null);
+    const [favouritePlacesData, setFavouritePlacesData] = useState([]);
+    const [routes, setRoutes] = useState([]);
+    const [routeInfo, setRouteInfo] = useState({});
+    const [favouritePlaceInfo, setFavouritePlaceInfo] = useState({});
 
     async function getDataFromDb() {
         const id = await getData("id");
 
         // get username
         axios
-            .get(`https://hist-museum.onrender.com/api/users/${id}`, {
+            .get(`http://89.104.68.107:1337/api/users/${id}`, {
                 headers: {
                     Authorization:
                         "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
@@ -50,47 +58,11 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             .catch((error) => {
                 console.log("ERROR WITH USERS!!!");
             });
-
-        // get favourite places
-        axios
-            .get(
-                "https://hist-museum.onrender.com/api/liked-objects/?populate=*",
-                {
-                    headers: {
-                        Authorization:
-                            "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
-                    },
-                }
-            )
-            .then((response) => {
-                response.data.data.forEach((el) => {
-                    if (
-                        userName ===
-                        el.attributes.users_permissions_user.data.attributes
-                            .username
-                    ) {
-                        const data = el.attributes;
-                        if (
-                            !favouritePlacesData.some((el) => {
-                                return (
-                                    data.address === el.address &&
-                                    data.description === el.description &&
-                                    data.name === el.name
-                                );
-                            })
-                        ) {
-                            favouritePlacesData.push(el.attributes);
-                        }
-                    }
-                    setFavouritePlacesData(favouritePlacesData);
-                });
-            })
-            .catch((error) => {
-                console.log("ERROR WITH FAVOURITE PLACES!!!");
-            });
     }
 
-    getDataFromDb();
+    useEffect(() => {
+        getDataFromDb();
+    }, []);
 
     const textVars = {
         MenuList: userName,
@@ -99,6 +71,7 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
         AddFavouritePlaceForm: "Любимые места",
         FavouritePlaceInfoPage: "Любимые места",
         Routes: "Маршруты",
+        RouteInfoPage: "Маршруты",
     };
 
     return (
@@ -123,6 +96,7 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             ) : null}
             {currentPage === "FavouritePlaces" ? (
                 <FavouritePlaces
+                    setFavouritePlacesData={setFavouritePlacesData}
                     favouritePlacesData={favouritePlacesData}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
@@ -151,6 +125,9 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             ) : null}
             {currentPage === "Routes" ? (
                 <Routes
+                    setRoutes={setRoutes}
+                    setRouteInfo={setRouteInfo}
+                    routes={routes}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
@@ -162,6 +139,15 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
                     setisLogin={setisLogin}
+                />
+            ) : null}
+            {currentPage === "RouteInfoPage" ? (
+                <RouteInfoPage
+                    setIsRouteStarted={setIsRouteStarted}
+                    route={routeInfo}
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
                 />
             ) : null}
             <ExitButton
