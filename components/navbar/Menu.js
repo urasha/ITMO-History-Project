@@ -10,6 +10,7 @@ import Routes from "./Routes";
 import Settings from "./Settings";
 import getData from "../common/getData";
 import axios from "axios";
+import RouteInfoPage from "./RouteInfoPage"
 
 export default function Menu({ isOpen, setisOpen, setisLogin }) {
     const manIcon = `
@@ -31,6 +32,8 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
 
     const [favouritePlacesData, setFavouritePlacesData] = useState([]);
+    const [routes, setRoutes] = useState([]);
+    const [routeInfo, setRouteInfo] = useState({});
     const [favouritePlaceInfo, setFavouritePlaceInfo] = useState({});
 
     async function getDataFromDb() {
@@ -50,31 +53,10 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             .catch((error) => {
                 console.log("ERROR WITH USERS!!!");
             });
-
-        // get favourite places
-        axios
-            .get("http://89.104.68.107:1337/api/liked-objects?populate=*", {
-                headers: {
-                    Authorization:
-                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
-                },
-            })
-            .then((response) => {
-                let places = [];
-                response.data.data.forEach((el) => {
-                    if (el.attributes.user.data.id == id) {
-                        places.push(el.attributes.place.data);
-                    }
-                });
-                setFavouritePlacesData(places);
-            })
-            .catch((error) => {
-                console.log("ERROR WITH FAVOURITE PLACES!!!");
-            });
     }
 
     useEffect(() => {
-        setInterval(() => getDataFromDb(), 5000);
+        getDataFromDb();
     }, []);
 
     const textVars = {
@@ -84,6 +66,7 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
         AddFavouritePlaceForm: "Любимые места",
         FavouritePlaceInfoPage: "Любимые места",
         Routes: "Маршруты",
+        RouteInfoPage: "Маршруты",
     };
 
     return (
@@ -100,7 +83,6 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             />
             {currentPage === "MenuList" ? (
                 <MenuList
-                    
                     textVars={textVars}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
@@ -109,6 +91,7 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             ) : null}
             {currentPage === "FavouritePlaces" ? (
                 <FavouritePlaces
+                    setFavouritePlacesData={setFavouritePlacesData}
                     favouritePlacesData={favouritePlacesData}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
@@ -137,6 +120,9 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             ) : null}
             {currentPage === "Routes" ? (
                 <Routes
+                    setRoutes={setRoutes}
+                    setRouteInfo={setRouteInfo}
+                    routes={routes}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
@@ -148,6 +134,14 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
                     setisLogin={setisLogin}
+                />
+            ) : null}
+            {currentPage === "RouteInfoPage" ? (
+                <RouteInfoPage
+                    routeInfo={routeInfo}
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
                 />
             ) : null}
             <ExitButton
