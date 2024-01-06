@@ -31,6 +31,8 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
     const [stackOfPages, setStackOfPages] = useState(["MenuList"]);
 
     const [favouritePlacesData, setFavouritePlacesData] = useState([]);
+    const [routes, setRoutes] = useState([]);
+    const [routeInfo, setRouteInfo] = useState({});
     const [favouritePlaceInfo, setFavouritePlaceInfo] = useState({});
 
     async function getDataFromDb() {
@@ -71,6 +73,25 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             .catch((error) => {
                 console.log("ERROR WITH FAVOURITE PLACES!!!");
             });
+
+        // get routes
+        axios
+            .get(`http://89.104.68.107:1337/api/routes`, {
+                headers: {
+                    Authorization:
+                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                },
+            })
+            .then((response) => {
+                let r = [];
+                response.data.data.forEach((el) => {
+                    r.push(el);
+                });
+                setRoutes(r);
+            })
+            .catch((error) => {
+                console.log("ERROR WITH ROUTES!!!");
+            });
     }
 
     useEffect(() => {
@@ -100,7 +121,6 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             />
             {currentPage === "MenuList" ? (
                 <MenuList
-                    
                     textVars={textVars}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
@@ -137,6 +157,8 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
             ) : null}
             {currentPage === "Routes" ? (
                 <Routes
+                    setRouteInfo={setRouteInfo}
+                    routes={routes}
                     setCurrentPage={setCurrentPage}
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
@@ -148,6 +170,13 @@ export default function Menu({ isOpen, setisOpen, setisLogin }) {
                     setStackOfPages={setStackOfPages}
                     stackOfPages={stackOfPages}
                     setisLogin={setisLogin}
+                />
+            ) : null}
+            {currentPage === "RouteInfoPage" ? (
+                <RouteInfoPage
+                    setCurrentPage={setCurrentPage}
+                    setStackOfPages={setStackOfPages}
+                    stackOfPages={stackOfPages}
                 />
             ) : null}
             <ExitButton

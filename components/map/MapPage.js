@@ -208,7 +208,7 @@ export default function MapPage({ isOpen }) {
                     setisFullCard={setisFullCard}
                 />
             )}
-            <Text
+            {/* <Text
                 style={{
                     color: "black",
                     fontSize: 24,
@@ -224,7 +224,7 @@ export default function MapPage({ isOpen }) {
                 }}
             >
                 OPEN CARD
-            </Text>
+            </Text> */}
         </View>
     );
 }
