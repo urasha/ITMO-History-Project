@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     useWindowDimensions,
+    Image,
 } from "react-native";
 
 import { SvgXml } from "react-native-svg";
@@ -55,14 +56,17 @@ export default function Routes({
         <View style={[styles.container]}>
             <ScrollView
                 style={{
-                    height: routes.length * 63,
+                    height: routes.length * 66,
                     flexGrow: 0,
                     maxHeight: heightOfScrollView,
                 }}
             >
                 {routes.map((info, index) => {
                     return (
-                        <View key={routes[index].id} style={styles.favouritePlaceContainer}>
+                        <View
+                            key={routes[index].id}
+                            style={styles.favouritePlaceContainer}
+                        >
                             <TouchableOpacity
                                 style={{
                                     flexDirection: "row",
@@ -70,20 +74,27 @@ export default function Routes({
                                     alignItems: "center",
                                 }}
                                 onPress={() => {
-                                    setRouteInfo(routes[index].attributes);
+                                    setRouteInfo(routes[index]);
                                     stackOfPages.push("RouteInfoPage");
                                     setStackOfPages(stackOfPages);
                                     setCurrentPage("RouteInfoPage");
                                 }}
                             >
+                                <Image
+                                    source={{
+                                        uri: routes[index].attributes.picture
+                                            .data.attributes.url,
+                                    }}
+                                    resizeMode="cover"
+                                    style={{ width: 46, height: 46 }}
+                                />
                                 <Text style={styles.favouritePlaceText}>
                                     {info.attributes["name"]}
                                 </Text>
                                 <SvgXml
                                     xml={arrowIcon}
                                     style={{
-                                        position: "absolute",
-                                        left: "90%",
+                                        left: 22
                                     }}
                                 />
                             </TouchableOpacity>
@@ -103,17 +114,18 @@ const styles = StyleSheet.create({
     },
 
     favouritePlaceContainer: {
-        height: 63,
+        height: 66,
         justifyContent: "center",
-        paddingLeft: "4.5%",
+        paddingLeft: "2.5%",
         borderBottomWidth: 2,
         borderColor: "#E8DED44D",
     },
 
     favouritePlaceText: {
+        textAlign: "center",
         color: "#E8DED4",
         fontSize: 17,
-        width: "85%",
+        width: "75%",
     },
 
     addFavouriteContainer: {
