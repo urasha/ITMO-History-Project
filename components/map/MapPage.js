@@ -53,13 +53,15 @@ export default function MapPage({ isOpen, setIsRouteStarted, isRouteStarted }) {
     `;
 
     const onMessage = (payload) => {
-        // console.log(payload.nativeEvent.data);
-
         try {
-            if (payload.nativeEvent.data == "map ready") {
-                let chosenRouteId = 1;
-                fetchRoutes(chosenRouteId);
-            } else if (payload.nativeEvent.data.split(",")[0] == "clicked") {
+            if (payload.nativeEvent.data.split(',')[0] == "console") {
+                console.log(payload.nativeEvent.data);
+            }
+            // else if (payload.nativeEvent.data == "map ready") {
+            //     let chosenRouteId = 1;
+            //     fetchRoutes(chosenRouteId);
+            // } 
+            else if (payload.nativeEvent.data.split(",")[0] == "clicked") {
                 data = payload.nativeEvent.data.split(",");
                 coords = [data[1], data[2]];
 
@@ -154,11 +156,9 @@ export default function MapPage({ isOpen, setIsRouteStarted, isRouteStarted }) {
         for (var i = 0; i < places.length; i++) {
             var latE = Math.abs(places[i][0] - coord[0]);
             var longE = Math.abs(places[i][1] - coord[1]);
-            if (latE < 0.0005 && longE < 0.0005) {
-                if (latE + longE < minE) {
-                    minE = latE + longE;
-                    placeInd = i;
-                }
+            if (latE + longE < minE) {
+                minE = latE + longE;
+                placeInd = i;
             }
         }
         return places[placeInd][2];
@@ -187,6 +187,21 @@ export default function MapPage({ isOpen, setIsRouteStarted, isRouteStarted }) {
                 console.log(data);
             });
     }
+
+
+    // START/END ROUTE
+    useEffect(() => {
+        if (isRouteStarted) {
+            // console.log(getData("isRouteStarted"));
+            (async () => {
+                fetchRoutes(await getData("currentRouteId"));
+            })();
+        }
+        else {
+            webviewRef.current.postMessage(["reset"]);
+        }
+    }, [isRouteStarted]);
+
 
     return (
         <View

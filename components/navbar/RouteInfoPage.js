@@ -132,7 +132,7 @@ export default function RouteInfoPage({ route, setIsRouteStarted }) {
                             onPress={() => {
                                 setData("isRouteStarted", true);
                                 setIsRouteStarted(true);
-
+                                setData("currentRouteId", route.id);
                                 /* TODO: сделать функцию для начала маршрута */
 
                                 /* переменная route содержит всю инфу о маршруте (и id тоже) */

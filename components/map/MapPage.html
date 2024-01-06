@@ -9,69 +9,8 @@
             overflow: hidden;
         }
     </style>
-
-
-    <!-- <script type="text/javascript">
-        ymaps.ready(init);
-
-        function init() {
-            //DONT REMOVE!!
-            console.log('map ready');
-            var myMap = new ymaps.Map('map', {
-                center: [60.01, 30.38],
-                zoom: 12,
-                controls: []
-            });
-
-
-
-            personGeo = new ymaps.Placemark([0, 0], {}, {preset: 'islands#geolocationIcon'});
-            myMap.geoObjects.add(personGeo);
-            
-            ymaps.geolocation.get({
-                provider: 'yandex',
-                mapStateAutoApply: true
-            }).then(function (result) {
-                personGeo.geometry.setCoordinates(result.geoObjects.get(0).geometry.getCoordinates());
-            });
-
-            routePoints = [];
-            multiRoute = new ymaps.multiRouter.MultiRoute({
-                referencePoints: routePoints,
-                params: {
-                    routingMode: 'pedestrian'
-                }
-            }, {
-                boundsAutoApply: false
-            });
-            myMap.geoObjects.add(multiRoute);
-
-            window.addEventListener("message", message => {
-                //console.log("GOT ");
-                //console.log(message.data);
-                
-                if (message.data[0] == 'route') {
-                    // switch (message.data[1]) {
-                    //     case '1':
-                    //         routePoints = ["Санкт-Петербург, Кронверкский проспект 49", "Санкт-Петербург, Ломоносова 9"];
-                    //         break;
-                    //     case '2':
-                    //         routePoints = ["Санкт-Петербург, Биржевая линия 14", "Санкт-Петербург, Гривцова 14-16"];
-                    //         break;
-                    // }
-                    routePoints = message.data[1];
-
-                    multiRoute.model.setReferencePoints(routePoints);
-                }
-                else if (message.data[0] === 'location') {
-                    personGeo.geometry.setCoordinates([message.data[1], message.data[2]]);
-                }
-            });
-        }
-    </script> -->
 </head>
 <body>
-    <!-- <div id="map" style="width: 100vw; height: 100vh"></div> -->
     <div id="container"></div>
     <script src="https://mapgl.2gis.com/api/js/v1"></script>
     <script src="https://unpkg.com/@2gis/mapgl-directions@^2/dist/directions.js"></script>
@@ -80,18 +19,14 @@
         const map = new mapgl.Map('container', {
             center: [30.337168797796412, 59.9342321280682],
             zoom: 16,
-            key: '6a2ceaf5-a128-4d13-a15b-122661449c4d',
+            key: '99a96d39-71e5-456d-a1f5-1c2aae424a40',
             style: 'c080bb6a-8134-4993-93a1-5b4d8c36a59b'
         });
         window.ReactNativeWebView.postMessage("map ready");
-        
-        // window.ReactNativeWebView.postMessage(map.getStyleState().);
-        
 
         const directions = new mapgl.Directions(map, {
-            directionsApiKey: '6a2ceaf5-a128-4d13-a15b-122661449c4d',
+            directionsApiKey: '99a96d39-71e5-456d-a1f5-1c2aae424a40',
         });
-
 
         const personGeo = new mapgl.Marker(map, {
             coordinates: [0, 0],
@@ -99,31 +34,50 @@
         });
 
         var routePoints;
+        var pointMarkers = [];
 
-        window.addEventListener("message", message => {
-            //console.log("GOT ");
-            //console.log(message.data);
-            
+        window.addEventListener("message", message => {            
             if (message.data[0] == 'route') {
-                routePoints = message.data[1];
-                
+                var routePoints = [];
+                for (var i = 0; i < message.data[1].length; i++) {
+                    routePoints.push([message.data[1][i][0], message.data[1][i][1]]);
+                }
+
                 directions.pedestrianRoute({
                     points: routePoints
                 });
                 
+                avgLat = 0;
+                avgLong = 0;
                 routePoints.forEach((coord) => {
                     const marker = new mapgl.Marker(map, {
                         coordinates: coord,
                         zIndex: 100
                     });
                     marker.on('click', function (e) {
-                        data = ["clicked", e.lngLat, routePoints];
+                        data = ["clicked", e.lngLat, message.data[1]];
                         window.ReactNativeWebView.postMessage(data);
                     });
+                    pointMarkers.push(marker);
+                    
+                    avgLat += parseFloat(coord[0]);
+                    avgLong += parseFloat(coord[1]);
                 });
+
+                avgLat /= routePoints.length;
+                avgLong /= routePoints.length;
+                // zoom = Math.abs(routePoints[0][0] - routePoints[routePoints.length-1][0]) + Math.abs(routePoints[0][1] - routePoints[routePoints.length-1][1]);
+                // map.setCenter([avgLat, avgLong]);
             }
             else if (message.data[0] === 'location') {
                 personGeo.setCoordinates([message.data[2], message.data[1]]);
+                map.setCenter([message.data[2], message.data[1]]).setZoom(16); // <-- COMMENT THIS TO AVOID CENTERING
+            }
+            else if (message.data[0] === 'reset') {
+                directions.clear();
+                for (var i = 0; i < pointMarkers.length; i++) {
+                    pointMarkers[i].hide();
+                }
             }
         });
     </script>
