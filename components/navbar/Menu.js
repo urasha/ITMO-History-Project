@@ -45,14 +45,30 @@ export default function Menu({
         const id = await getData("id");
 
         // get username
-        axios
-            .get(`http://89.104.68.107:1337/api/users/${id}`, {
-                headers: {
-                    Authorization:
-                        "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
-                },
-            })
-            .then((response) => {
+        // axios
+        //     .get(`http://89.104.68.107:1337/api/users/${id}`, {
+        //         headers: {
+        //             Authorization:
+        //                 "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+        //         },
+        //     })
+        //     .then((response) => {
+        //         setUserName(response.data["username"]);
+        //     })
+        //     .catch((error) => {
+        //         console.log("ERROR WITH USERS!!!");
+        //     });
+
+        fetch(`http://89.104.68.107:1337/api/users/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization:
+                    "Bearer 36455c970cf5f1f44aaef68fcb596fc250b7add438e08bb87f6d1b1b690bb1a3a2058c6435a86a385343553dfbcff1c2cfa8139e6e8867398414f19f61eab5410800e763c9767569f1bb6488e95a8c7e7d665f11a8c7b64eaf45e72371c725678adc9db78f62e408516b2c015bec78bf519ce0ba59a0f190a39bb3ddbfeee61f",
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((responseData) => {
                 setUserName(response.data["username"]);
             })
             .catch((error) => {
